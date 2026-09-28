@@ -2,7 +2,7 @@
  * 시도·시군구 선택 목록. API 의 Q0/Q1(약국·응급의료기관 목록), STAGE1/STAGE2(실시간 병상)
  * 파라미터에 그대로 넣는 값이다.
  *
- * 기준: 2026-07-01 행정구역 (전남광주통합특별시 출범, 인천 제물포구·영종구·서해구·검단구 신설).
+ * 기준: 2026-07-01 행정구역 (전남광주통합특별시 출범, 인천 제물포구·영종구·서해구·검단구 신설)
  * 일반구가 있는 시(수원시 등)는 시 단위로만 둔다.
  * 행정구역이 바뀌면 이 표를 갱신한다.
  */
@@ -253,6 +253,10 @@ export interface Region {
 }
 
 export function isKnownRegion(r: Region): boolean {
+  // Only check own properties, not prototype properties
+  if (!Object.hasOwn(REGIONS, r.sido)) {
+    return false;
+  }
   const list = REGIONS[r.sido];
   if (!list) return false;
   return list.length === 0 ? r.sigungu === "" : list.includes(r.sigungu);
@@ -264,7 +268,7 @@ export function isKnownRegion(r: Region): boolean {
  */
 export function regionFromAddress(address: string): Region | null {
   const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
+  if (!sido || !Object.hasOwn(REGIONS, sido)) return null;
   const list = REGIONS[sido] ?? [];
   if (list.length === 0) return { sido, sigungu: "" };
   if (second && list.includes(second)) return { sido, sigungu: second };
