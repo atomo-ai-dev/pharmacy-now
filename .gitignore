@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# build / test output
+coverage/
+*.tsbuildinfo
+
+# env files — never commit a service key
+.env*
+!.env.example
+
+# misc
+.DS_Store
+*.log
+.vercel
