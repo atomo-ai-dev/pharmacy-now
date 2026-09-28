@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 데모용 가상 약국. getParmacyListInfoInqire 응답 형식을 따른다. 이름·주소·전화는 실제와 무관하다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>서울특별시 종로구 종로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 종로이십사시약국</dutyName>
+        <dutyTel1>02-0000-0001</dutyTel1>
+        <dutyTime1s>0000</dutyTime1s>
+        <dutyTime1c>2400</dutyTime1c>
+        <dutyTime2s>0000</dutyTime2s>
+        <dutyTime2c>2400</dutyTime2c>
+        <dutyTime3s>0000</dutyTime3s>
+        <dutyTime3c>2400</dutyTime3c>
+        <dutyTime4s>0000</dutyTime4s>
+        <dutyTime4c>2400</dutyTime4c>
+        <dutyTime5s>0000</dutyTime5s>
+        <dutyTime5c>2400</dutyTime5c>
+        <dutyTime6s>0000</dutyTime6s>
+        <dutyTime6c>2400</dutyTime6c>
+        <dutyTime7s>0000</dutyTime7s>
+        <dutyTime7c>2400</dutyTime7c>
+        <dutyTime8s>0000</dutyTime8s>
+        <dutyTime8c>2400</dutyTime8c>
+        <hpid>DEMO0001</hpid>
+        <wgs84Lat>37.5702</wgs84Lat>
+        <wgs84Lon>126.9918</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 대학로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 새벽별약국</dutyName>
+        <dutyTel1>02-0000-0002</dutyTel1>
+        <dutyTime1s>1800</dutyTime1s>
+        <dutyTime1c>0200</dutyTime1c>
+        <dutyTime2s>1800</dutyTime2s>
+        <dutyTime2c>0200</dutyTime2c>
+        <dutyTime3s>1800</dutyTime3s>
+        <dutyTime3c>0200</dutyTime3c>
+        <dutyTime4s>1800</dutyTime4s>
+        <dutyTime4c>0200</dutyTime4c>
+        <dutyTime5s>1800</dutyTime5s>
+        <dutyTime5c>0200</dutyTime5c>
+        <dutyTime6s>1800</dutyTime6s>
+        <dutyTime6c>0200</dutyTime6c>
+        <dutyTime8s>1800</dutyTime8s>
+        <dutyTime8c>0200</dutyTime8c>
+        <hpid>DEMO0002</hpid>
+        <wgs84Lat>37.579</wgs84Lat>
+        <wgs84Lon>127.002</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 인사동길 000 (예시)</dutyAddr>
+        <dutyName>(예시) 인사동약국</dutyName>
+        <dutyTel1>02-0000-0003</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1500</dutyTime6c>
+        <hpid>DEMO0003</hpid>
+        <wgs84Lat>37.5735</wgs84Lat>
+        <wgs84Lon>126.986</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 세종대로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 광화문온약국</dutyName>
+        <dutyTel1>02-0000-0004</dutyTel1>
+        <dutyTime1s>0830</dutyTime1s>
+        <dutyTime1c>2230</dutyTime1c>
+        <dutyTime2s>0830</dutyTime2s>
+        <dutyTime2c>2230</dutyTime2c>
+        <dutyTime3s>0830</dutyTime3s>
+        <dutyTime3c>2230</dutyTime3c>
+        <dutyTime4s>0830</dutyTime4s>
+        <dutyTime4c>2230</dutyTime4c>
+        <dutyTime5s>0830</dutyTime5s>
+        <dutyTime5c>2230</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1800</dutyTime7c>
+        <dutyTime8s>1000</dutyTime8s>
+        <dutyTime8c>1800</dutyTime8c>
+        <hpid>DEMO0004</hpid>
+        <wgs84Lat>37.572</wgs84Lat>
+        <wgs84Lon>126.9768</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 창경궁로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 혜화약국</dutyName>
+        <dutyTel1>02-0000-0005</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime8s>1000</dutyTime8s>
+        <dutyTime8c>1600</dutyTime8c>
+        <hpid>DEMO0005</hpid>
+        <wgs84Lat>37.5822</wgs84Lat>
+        <wgs84Lon>126.9985</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 명동길 000 (예시)</dutyAddr>
+        <dutyName>(예시) 명동약국</dutyName>
+        <dutyTel1>02-0000-0006</dutyTel1>
+        <dutyTime1s>1000</dutyTime1s>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime2s>1000</dutyTime2s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime3s>1000</dutyTime3s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime4s>1000</dutyTime4s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime5s>1000</dutyTime5s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>2200</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>2200</dutyTime7c>
+        <hpid>DEMO0006</hpid>
+        <wgs84Lat>37.5637</wgs84Lat>
+        <wgs84Lon>126.985</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 을지로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 을지로약국</dutyName>
+        <dutyTel1>02-0000-0007</dutyTel1>
+        <dutyTime1s>830</dutyTime1s>
+        <dutyTime1c>1830</dutyTime1c>
+        <dutyTime2s>830</dutyTime2s>
+        <dutyTime2c>1830</dutyTime2c>
+        <dutyTime3s>830</dutyTime3s>
+        <dutyTime3c>1830</dutyTime3c>
+        <dutyTime4s>830</dutyTime4s>
+        <dutyTime4c>1830</dutyTime4c>
+        <dutyTime5s>830</dutyTime5s>
+        <dutyTime5c>1830</dutyTime5c>
+        <hpid>DEMO0007</hpid>
+        <wgs84Lat>37.566</wgs84Lat>
+        <wgs84Lon>126.991</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 남대문시장길 000 (예시)</dutyAddr>
+        <dutyName>(예시) 남대문약국</dutyName>
+        <dutyTel1>02-0000-0008</dutyTel1>
+        <dutyTime1s>09:3O</dutyTime1s>
+        <dutyTime1c>2000</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2000</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2000</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2000</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2000</dutyTime5c>
+        <hpid>DEMO0008</hpid>
+        <wgs84Lat>37.5593</wgs84Lat>
+        <wgs84Lon>126.9776</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 충무로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 충무로약국</dutyName>
+        <dutyTel1>02-0000-0009</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2300</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2300</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2300</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2300</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2300</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>2300</dutyTime6c>
+        <dutyTime7s>0900</dutyTime7s>
+        <dutyTime7c>2300</dutyTime7c>
+        <dutyTime8s>0900</dutyTime8s>
+        <dutyTime8c>2300</dutyTime8c>
+        <hpid>DEMO0009</hpid>
+        <wgs84Lat>37.5612</wgs84Lat>
+        <wgs84Lon>126.9942</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 종로 000-1 (예시)</dutyAddr>
+        <dutyName>(예시) 동대문약국</dutyName>
+        <dutyTel1>02-0000-0010</dutyTel1>
+        <dutyTime1s>0700</dutyTime1s>
+        <dutyTime1c>2400</dutyTime1c>
+        <dutyTime2s>0700</dutyTime2s>
+        <dutyTime2c>2400</dutyTime2c>
+        <dutyTime3s>0700</dutyTime3s>
+        <dutyTime3c>2400</dutyTime3c>
+        <dutyTime4s>0700</dutyTime4s>
+        <dutyTime4c>2400</dutyTime4c>
+        <dutyTime5s>0700</dutyTime5s>
+        <dutyTime5c>2400</dutyTime5c>
+        <dutyTime6s>0700</dutyTime6s>
+        <dutyTime6c>2400</dutyTime6c>
+        <hpid>DEMO0010</hpid>
+        <wgs84Lat>37.5711</wgs84Lat>
+        <wgs84Lon>127.0095</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 한강대로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 서울역약국</dutyName>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>1800</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>1800</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c></dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>1800</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>1800</dutyTime5c>
+        <hpid>DEMO0011</hpid>
+        <wgs84Lat>37.5553</wgs84Lat>
+        <wgs84Lon>126.9707</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 삼청로 000 (예시)</dutyAddr>
+        <dutyName>(예시) 삼청약국</dutyName>
+        <dutyTel1>02-0000-0012</dutyTel1>
+        <hpid>DEMO0012</hpid>
+        <wgs84Lat>37.584</wgs84Lat>
+        <wgs84Lon>126.982</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>12</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>12</totalCount>
+  </body>
+</response>

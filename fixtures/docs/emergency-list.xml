@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 출처: NIA-IFT-OpenAPI활용가이드-01.국립중앙의료원-응급의료정보조회서비스_V13.hwp, getEgytListInfoInqire 응답 예제 -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>서울특별시 종로구 평동 164 (새문안로 98)</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyName>서울적십자병원</dutyName>
+        <dutyTel1>02-2002-8000</dutyTel1>
+        <dutyTel3>02-2002-0000</dutyTel3>
+        <hpid>A0000191</hpid>
+        <phpid>11100109</phpid>
+        <rnum>1</rnum>
+        <wgs84Lat>37.56740267694248</wgs84Lat>
+        <wgs84Lon>126.96704997103927</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 평동 108 (새문안길 78)</dutyAddr>
+        <dutyEmcls>G006</dutyEmcls>
+        <dutyName>강북삼성병원</dutyName>
+        <dutyTel1>02-2001-2114</dutyTel1>
+        <dutyTel3>02-2001-0000</dutyTel3>
+        <hpid>A0000190</hpid>
+        <phpid>11100095</phpid>
+        <rnum>2</rnum>
+        <wgs84Lat>37.5685066114755</wgs84Lat>
+        <wgs84Lon>126.96784412105825</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 연건동 (대학로 101)</dutyAddr>
+        <dutyEmcls>G001</dutyEmcls>
+        <dutyName>서울대학교병원</dutyName>
+        <dutyTel1>02-2072-2114</dutyTel1>
+        <dutyTel3>02-2072-0000</dutyTel3>
+        <hpid>A0000005</hpid>
+        <phpid>11100079</phpid>
+        <rnum>3</rnum>
+        <wgs84Lat>37.57976260966429</wgs84Lat>
+        <wgs84Lon>126.99897999722211</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 무악동 32-2 (통일로 256)</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyName>세란병원</dutyName>
+        <dutyTel1>02-737-0181</dutyTel1>
+        <dutyTel3>737-0000</dutyTel3>
+        <hpid>A0000033</hpid>
+        <phpid>11101059</phpid>
+        <rnum>4</rnum>
+        <wgs84Lat>37.575139160755775</wgs84Lat>
+        <wgs84Lon>126.95746391615384</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>30</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>

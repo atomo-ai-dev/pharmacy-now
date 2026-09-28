@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 데모용 가상 병상 정보. getEmrrmRltmUsefulSckbdInfoInqire 응답 형식을 따른다. 데모 화면에서는 입력 시각을 현재 시각 기준으로 옮긴다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyName>(예시) 서울중앙대학교병원</dutyName>
+        <dutyTel3>02-0000-1119</dutyTel3>
+        <hpid>DEMOE001</hpid>
+        <hv28>2</hv28>
+        <hvec>5</hvec>
+        <hvidate>20260928103000</hvidate>
+        <hvs01>30</hvs01>
+        <hvs02>6</hvs02>
+      </item>
+      <item>
+        <dutyName>(예시) 종로성심병원</dutyName>
+        <dutyTel3>02-0000-2119</dutyTel3>
+        <hpid>DEMOE002</hpid>
+        <hv28>0</hv28>
+        <hvec>-3</hvec>
+        <hvidate>20260928102500</hvidate>
+        <hvs01>20</hvs01>
+        <hvs02>4</hvs02>
+      </item>
+      <item>
+        <dutyName>(예시) 을지로병원</dutyName>
+        <hpid>DEMOE003</hpid>
+        <hvec>0</hvec>
+        <hvidate>20260928101000</hvidate>
+        <hvs01>10</hvs01>
+      </item>
+      <item>
+        <dutyName>(예시) 남산병원</dutyName>
+        <dutyTel3>02-0000-4119</dutyTel3>
+        <hpid>DEMOE004</hpid>
+        <hvec></hvec>
+        <hvidate>20260928070000</hvidate>
+        <hvs01>8</hvs01>
+      </item>
+    </items>
+    <numOfRows>4</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>

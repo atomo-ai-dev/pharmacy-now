@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 데모용 가상 응급의료기관. getEgytListInfoInqire 응답 형식을 따른다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>서울특별시 종로구 대학로 000 (예시)</dutyAddr>
+        <dutyEmcls>G001</dutyEmcls>
+        <dutyEmclsName>권역응급의료센터</dutyEmclsName>
+        <dutyName>(예시) 서울중앙대학교병원</dutyName>
+        <dutyTel1>02-0000-1000</dutyTel1>
+        <dutyTel3>02-0000-1119</dutyTel3>
+        <hpid>DEMOE001</hpid>
+        <wgs84Lat>37.5795</wgs84Lat>
+        <wgs84Lon>126.999</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 종로구 새문안로 000 (예시)</dutyAddr>
+        <dutyEmcls>G006</dutyEmcls>
+        <dutyEmclsName>지역응급의료센터</dutyEmclsName>
+        <dutyName>(예시) 종로성심병원</dutyName>
+        <dutyTel1>02-0000-2000</dutyTel1>
+        <dutyTel3>02-0000-2119</dutyTel3>
+        <hpid>DEMOE002</hpid>
+        <wgs84Lat>37.569</wgs84Lat>
+        <wgs84Lon>126.969</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 을지로 000-2 (예시)</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyEmclsName>지역응급의료기관</dutyEmclsName>
+        <dutyName>(예시) 을지로병원</dutyName>
+        <dutyTel1>02-0000-3000</dutyTel1>
+        <hpid>DEMOE003</hpid>
+        <wgs84Lat>37.5665</wgs84Lat>
+        <wgs84Lon>126.9975</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 퇴계로 000 (예시)</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyEmclsName>지역응급의료기관</dutyEmclsName>
+        <dutyName>(예시) 남산병원</dutyName>
+        <dutyTel1>02-0000-4000</dutyTel1>
+        <dutyTel3>02-0000-4119</dutyTel3>
+        <hpid>DEMOE004</hpid>
+        <wgs84Lat>37.559</wgs84Lat>
+        <wgs84Lon>126.986</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>서울특별시 중구 청계천로 000 (예시)</dutyAddr>
+        <dutyEmcls>G099</dutyEmcls>
+        <dutyEmclsName>응급실운영신고기관</dutyEmclsName>
+        <dutyName>(예시) 청계천병원</dutyName>
+        <dutyTel1>02-0000-5000</dutyTel1>
+        <dutyTel3>02-0000-5119</dutyTel3>
+        <hpid>DEMOE005</hpid>
+        <wgs84Lat>37.569</wgs84Lat>
+        <wgs84Lon>126.988</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>5</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>5</totalCount>
+  </body>
+</response>
