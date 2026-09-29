@@ -1,4 +1,5 @@
 import { formatDistance } from "@/lib/geo/distance";
+import { phoneToTelUri } from "@/lib/phone";
 import type { PharmacyView } from "@/lib/views";
 
 function OpenBadge({ p }: { p: PharmacyView }) {
@@ -17,6 +18,8 @@ function OpenBadge({ p }: { p: PharmacyView }) {
 }
 
 export function PharmacyCard({ p }: { p: PharmacyView }) {
+  const telUri = phoneToTelUri(p.phone);
+
   return (
     <article className="card" aria-labelledby={`ph-${p.id}`}>
       <div className="card-head">
@@ -37,10 +40,12 @@ export function PharmacyCard({ p }: { p: PharmacyView }) {
         </ul>
       )}
       <div className="card-actions">
-        {p.phone ? (
-          <a className="btn btn-small" href={`tel:${p.phone.replace(/[^\d+]/g, "")}`}>
+        {telUri ? (
+          <a className="btn btn-small" href={`tel:${telUri}`}>
             전화 {p.phone}
           </a>
+        ) : p.phone ? (
+          <span className="muted">전화 {p.phone}</span>
         ) : (
           <span className="muted">전화번호 없음</span>
         )}

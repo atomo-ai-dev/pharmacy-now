@@ -1,4 +1,5 @@
 import { formatDistance } from "@/lib/geo/distance";
+import { phoneToTelUri } from "@/lib/phone";
 import { formatMinutes, isoDate, toKst } from "@/lib/time/kst";
 import type { BedView, EmergencyRoomView } from "@/lib/views";
 
@@ -39,6 +40,8 @@ export function updatedLabel(updatedAt: string, reference: Date): string {
 }
 
 export function EmergencyCard({ er, reference }: { er: EmergencyRoomView; reference: Date }) {
+  const telUri = phoneToTelUri(er.phone);
+
   return (
     <article className="card" aria-labelledby={`er-${er.id}`}>
       <div className="card-head">
@@ -60,10 +63,12 @@ export function EmergencyCard({ er, reference }: { er: EmergencyRoomView; refere
         {er.stale && " — 오래된 정보일 수 있습니다"}
       </p>
       <div className="card-actions">
-        {er.phone ? (
-          <a className="btn btn-small" href={`tel:${er.phone.replace(/[^\d+]/g, "")}`}>
+        {telUri ? (
+          <a className="btn btn-small" href={`tel:${telUri}`}>
             응급실 전화 {er.phone}
           </a>
+        ) : er.phone ? (
+          <span className="muted">응급실 전화 {er.phone}</span>
         ) : (
           <span className="muted">전화번호 없음</span>
         )}
