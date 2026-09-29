@@ -79,6 +79,12 @@ function HolidayNote({ meta }: { meta: ListMeta }) {
   return null;
 }
 
+const TABS: readonly Tab[] = ["pharmacy", "emergency"];
+const TAB_IDS: Record<Tab, string> = {
+  pharmacy: "tab-pharmacy",
+  emergency: "tab-emergency",
+};
+
 export function Finder() {
   const [loc, setLoc] = useState<PickedLocation | null>(null);
   const [tab, setTab] = useState<Tab>("pharmacy");
@@ -94,6 +100,43 @@ export function Finder() {
 
   const pick = useCallback((next: PickedLocation) => setLoc(next), []);
 
+  const handleTabKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>) => {
+      const currentIndex = TABS.indexOf(tab);
+      let nextIndex = currentIndex;
+      let handled = false;
+
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        nextIndex = (currentIndex + 1) % TABS.length;
+        handled = true;
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        nextIndex = (currentIndex - 1 + TABS.length) % TABS.length;
+        handled = true;
+      } else if (e.key === "Home") {
+        nextIndex = 0;
+        handled = true;
+      } else if (e.key === "End") {
+        nextIndex = TABS.length - 1;
+        handled = true;
+      }
+
+      if (handled) {
+        e.preventDefault();
+        const nextTab = TABS[nextIndex];
+        if (nextTab !== undefined) {
+          setTab(nextTab);
+          // Move focus to the newly selected tab
+          const nextTabId = TAB_IDS[nextTab];
+          const nextTabElement = document.getElementById(nextTabId) as HTMLButtonElement | null;
+          if (nextTabElement) {
+            nextTabElement.focus();
+          }
+        }
+      }
+    },
+    [tab],
+  );
+
   return (
     <>
       <LocationPicker onPick={pick} />
@@ -105,7 +148,9 @@ export function Finder() {
           id="tab-pharmacy"
           aria-selected={tab === "pharmacy"}
           aria-controls="panel-pharmacy"
+          tabIndex={tab === "pharmacy" ? 0 : -1}
           onClick={() => setTab("pharmacy")}
+          onKeyDown={handleTabKeyDown}
         >
           약국
         </button>
@@ -115,58 +160,66 @@ export function Finder() {
           id="tab-emergency"
           aria-selected={tab === "emergency"}
           aria-controls="panel-emergency"
+          tabIndex={tab === "emergency" ? 0 : -1}
           onClick={() => setTab("emergency")}
+          onKeyDown={handleTabKeyDown}
         >
           응급실
         </button>
       </div>
 
-      {tab === "pharmacy" && (
-        <section id="panel-pharmacy" role="tabpanel" aria-labelledby="tab-pharmacy">
-          <PharmacyFilters value={filter} onChange={setFilter} />
-          <Results
-            loc={loc}
-            load={pharmacies}
-            count={shownPharmacies.length}
-            total={pharmacies.status === "done" ? pharmacies.data.items.length : 0}
-            noun="약국"
-          >
-            {pharmacies.status === "done" && <HolidayNote meta={pharmacies.data} />}
+      <section
+        id="panel-pharmacy"
+        role="tabpanel"
+        aria-labelledby="tab-pharmacy"
+        hidden={tab !== "pharmacy"}
+      >
+        <PharmacyFilters value={filter} onChange={setFilter} />
+        <Results
+          loc={loc}
+          load={pharmacies}
+          count={shownPharmacies.length}
+          total={pharmacies.status === "done" ? pharmacies.data.items.length : 0}
+          noun="약국"
+        >
+          {pharmacies.status === "done" && <HolidayNote meta={pharmacies.data} />}
+          <ul className="card-list">
+            {shownPharmacies.map((p) => (
+              <li key={p.id}>
+                <PharmacyCard p={p} />
+              </li>
+            ))}
+          </ul>
+        </Results>
+      </section>
+
+      <section
+        id="panel-emergency"
+        role="tabpanel"
+        aria-labelledby="tab-emergency"
+        hidden={tab !== "emergency"}
+      >
+        <Results
+          loc={loc}
+          load={emergency}
+          count={emergency.status === "done" ? emergency.data.items.length : 0}
+          total={emergency.status === "done" ? emergency.data.items.length : 0}
+          noun="응급실"
+        >
+          <p className="muted small">
+            가용 병상은 각 병원이 입력한 값입니다. 음수는 정원을 넘겨 환자를 받고 있다는 뜻입니다.
+          </p>
+          {emergency.status === "done" && (
             <ul className="card-list">
-              {shownPharmacies.map((p) => (
-                <li key={p.id}>
-                  <PharmacyCard p={p} />
+              {emergency.data.items.map((er) => (
+                <li key={er.id}>
+                  <EmergencyCard er={er} reference={new Date(emergency.data.generatedAt)} />
                 </li>
               ))}
             </ul>
-          </Results>
-        </section>
-      )}
-
-      {tab === "emergency" && (
-        <section id="panel-emergency" role="tabpanel" aria-labelledby="tab-emergency">
-          <Results
-            loc={loc}
-            load={emergency}
-            count={emergency.status === "done" ? emergency.data.items.length : 0}
-            total={emergency.status === "done" ? emergency.data.items.length : 0}
-            noun="응급실"
-          >
-            <p className="muted small">
-              가용 병상은 각 병원이 입력한 값입니다. 음수는 정원을 넘겨 환자를 받고 있다는 뜻입니다.
-            </p>
-            {emergency.status === "done" && (
-              <ul className="card-list">
-                {emergency.data.items.map((er) => (
-                  <li key={er.id}>
-                    <EmergencyCard er={er} reference={new Date(emergency.data.generatedAt)} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Results>
-        </section>
-      )}
+          )}
+        </Results>
+      </section>
     </>
   );
 }
