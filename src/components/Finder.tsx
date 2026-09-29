@@ -80,6 +80,10 @@ function HolidayNote({ meta }: { meta: ListMeta }) {
 }
 
 const TABS: readonly Tab[] = ["pharmacy", "emergency"];
+const TAB_IDS: Record<Tab, string> = {
+  pharmacy: "tab-pharmacy",
+  emergency: "tab-emergency",
+};
 
 export function Finder() {
   const [loc, setLoc] = useState<PickedLocation | null>(null);
@@ -121,6 +125,12 @@ export function Finder() {
         const nextTab = TABS[nextIndex];
         if (nextTab !== undefined) {
           setTab(nextTab);
+          // Move focus to the newly selected tab
+          const nextTabId = TAB_IDS[nextTab];
+          const nextTabElement = document.getElementById(nextTabId) as HTMLButtonElement | null;
+          if (nextTabElement) {
+            nextTabElement.focus();
+          }
         }
       }
     },
