@@ -103,7 +103,16 @@ export class DataGoKrClient implements MedicalDataSource {
     } catch {
       throw new ApiError("공공데이터포털에 연결하지 못했습니다.");
     }
-    if (!res.ok) throw new ApiError(`공공데이터포털 응답 오류 (HTTP ${res.status})`);
-    return parseApiResponse(await res.text()).items;
+    const body = await res.text();
+    if (!res.ok) {
+      // HTTP 상태가 2xx 가 아니어도 본문이 OpenAPI_ServiceResponse 이면 해석한다
+      try {
+        return parseApiResponse(body).items;
+      } catch {
+        // 본문이 OpenAPI_ServiceResponse 가 아니면 HTTP 상태로 던진다
+        throw new ApiError(`공공데이터포털 응답 오류 (HTTP ${res.status})`);
+      }
+    }
+    return parseApiResponse(body).items;
   }
 }
