@@ -60,7 +60,7 @@ export function parseApiResponse(xml: string): ParsedResponse {
   const gateway = asRecord(asRecord(doc.openapi_serviceresponse)?.cmmmsgheader);
   if (gateway) {
     const code = typeof gateway.returnreasoncode === "string" ? gateway.returnreasoncode : null;
-    const msg = typeof gateway.returnauthmsg === "string" ? gateway.returnauthmsg : "SERVICE ERROR";
+    const msg = typeof gateway.errmsg === "string" ? gateway.errmsg : "SERVICE ERROR";
     throw new ApiError(`공공데이터포털 오류: ${msg}`, code);
   }
 
