@@ -42,29 +42,9 @@ function statusWithin(hours: DayHours, minutes: number): OpenStatus {
   }
 }
 
-/**
- * 현재 적용되는 운영시간을 반환한다.
- * - 자정을 넘긴 영업 중이면 그 운영시간을 반환한다.
- * - 아니면 오늘 운영시간을 반환한다.
- */
-function getApplicableHours(schedule: WeeklySchedule, now: Date): DayHours {
-  const today = toKst(now);
-  const yesterday = previousKstDay(now);
-
-  const carried = schedule[dayKeyFor(yesterday)];
-  if (carried.kind === "open" && carried.close > 1440 && today.minutes < carried.close - 1440) {
-    // 전날 영업을 이어받고 있다
-    return carried;
-  }
-
-  // 아니면 오늘 영업시간
-  return schedule[dayKeyFor(today)];
-}
-
 /** 오늘 운영시간 표기. "09:00–22:00", "휴무", 또는 null(확인 불가). */
 export function todayHoursLabel(schedule: WeeklySchedule, now: Date): string | null {
-  const applicableHours = getApplicableHours(schedule, now);
-  return hoursLabel(applicableHours);
+  return hoursLabel(schedule[dayKeyFor(toKst(now))]);
 }
 
 export function hoursLabel(hours: DayHours): string | null {
