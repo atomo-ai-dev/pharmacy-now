@@ -6,7 +6,7 @@ import {
   toPharmacyView,
 } from "../model/pharmacy";
 import type { LocationQuery } from "../query";
-import { LEGACY_PHARMACY_REGIONS, type Region } from "../regions";
+import { LEGACY_PHARMACY_REGIONS, type Region, regionFromAddress } from "../regions";
 import type { PharmacyView } from "../views";
 import { nearbyRegions, settledItems } from "./regionsNear";
 
@@ -37,6 +37,33 @@ function getLegacyRegionsForPharmacyQuery(region: Region): Region[] {
   return LEGACY_PHARMACY_REGIONS[key] ?? [];
 }
 
+/**
+ * 한 옛 구가 여러 새 구로 나뉜 경우 주소로 필터링한다.
+ * 예: 인천광역시 중구 → 제물포구 또는 영종구 (주소로 판별)
+ */
+function filterPharmaciesByTargetRegion(
+  pharmacies: Pharmacy[],
+  targetRegion: Region,
+): Pharmacy[] {
+  // 인천광역시 제물포구/영종구는 옛 이름 중구에서 매핑되므로,
+  // 주소의 실제 지역명으로 필터링한다.
+  const shouldFilter =
+    targetRegion.sido === "인천광역시" &&
+    (targetRegion.sigungu === "제물포구" || targetRegion.sigungu === "영종구");
+
+  if (!shouldFilter) {
+    return pharmacies;
+  }
+
+  return pharmacies.filter((p) => {
+    const addressRegion = regionFromAddress(p.address);
+    if (!addressRegion) return false;
+    return (
+      addressRegion.sido === targetRegion.sido && addressRegion.sigungu === targetRegion.sigungu
+    );
+  });
+}
+
 export async function findPharmacies(
   source: MedicalDataSource,
   query: LocationQuery,
@@ -59,7 +86,10 @@ export async function findPharmacies(
       }
     }
 
-    const list = Array.from(byId.values());
+    let list = Array.from(byId.values());
+    // 한 옛 구가 여러 새 구로 나뉜 경우 주소로 필터링한다.
+    list = filterPharmaciesByTargetRegion(list, query.region);
+
     return sortPharmacies(list.map((p) => toPharmacyView(p, now, query.origin))).slice(
       0,
       MAX_RESULTS,
