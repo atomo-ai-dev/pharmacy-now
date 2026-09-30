@@ -106,3 +106,30 @@ describe("findPharmacies — 내 위치", () => {
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
   });
 });
+
+describe("findPharmacies — 혼합 지역 필터링", () => {
+  it("양주시 검색 시 남양주시 결과는 제외한다", async () => {
+    const { readFixture } = await import("@/test/fixtures");
+    const { parseApiResponse } = await import("@/lib/api/xml");
+    const mixedData = parseApiResponse(readFixture("mixed-regions-pharmacies.xml")).items;
+    const source: MedicalDataSource = {
+      pharmaciesByRegion: async () => mixedData,
+      pharmaciesNear: (p) => demoSource().pharmaciesNear(p),
+      emergencyRoomsByRegion: (r) => demoSource().emergencyRoomsByRegion(r),
+      emergencyRoomsNear: (p) => demoSource().emergencyRoomsNear(p),
+      emergencyBeds: (r) => demoSource().emergencyBeds(r),
+    };
+
+    const items = await findPharmacies(
+      source,
+      { kind: "region", region: { sido: "경기도", sigungu: "양주시" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    // 양주시 약국만 남아야 함
+    expect(items.every((p) => p.address.includes("양주시"))).toBe(true);
+    expect(items.some((p) => p.address.includes("남양주시"))).toBe(false);
+    // 양주시 2개만 남아야 함
+    expect(items.length).toBe(2);
+  });
+});

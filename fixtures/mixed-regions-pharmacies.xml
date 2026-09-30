@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성 데이터: 양주시 검색 시 남양주시 결과가 섞인 경우. 실제 응답이 아닌 테스트용입니다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>경기도 양주시 덕장로 000</dutyAddr>
+        <dutyName>양주시약국1</dutyName>
+        <dutyTel1>031-0000-0001</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1700</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1700</dutyTime7c>
+        <hpid>YANGJU001</hpid>
+        <wgs84Lat>37.82</wgs84Lat>
+        <wgs84Lon>127.05</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>경기도 남양주시 다산로 000</dutyAddr>
+        <dutyName>남양주시약국1</dutyName>
+        <dutyTel1>031-0000-1001</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1800</dutyTime7c>
+        <hpid>NAMYANGJU001</hpid>
+        <wgs84Lat>37.64</wgs84Lat>
+        <wgs84Lon>127.11</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>경기도 남양주시 마석로 000</dutyAddr>
+        <dutyName>남양주시약국2</dutyName>
+        <dutyTel1>031-0000-1002</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1800</dutyTime7c>
+        <hpid>NAMYANGJU002</hpid>
+        <wgs84Lat>37.65</wgs84Lat>
+        <wgs84Lon>127.10</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>경기도 양주시 의정부로 000</dutyAddr>
+        <dutyName>양주시약국2</dutyName>
+        <dutyTel1>031-0000-0002</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1700</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1700</dutyTime7c>
+        <hpid>YANGJU002</hpid>
+        <wgs84Lat>37.80</wgs84Lat>
+        <wgs84Lon>127.06</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>4</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>

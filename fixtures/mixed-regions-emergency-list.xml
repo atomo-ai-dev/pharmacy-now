@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성 데이터: 대구광역시 서구 검색 시 달서구 결과가 섞인 경우. 실제 응답이 아닌 테스트용입니다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>대구광역시 서구 평리로 000</dutyAddr>
+        <dutyEmcls>G006</dutyEmcls>
+        <dutyEmclsName>지역응급의료센터</dutyEmclsName>
+        <dutyName>서구병원1</dutyName>
+        <dutyTel1>053-0000-1000</dutyTel1>
+        <dutyTel3>053-0000-1119</dutyTel3>
+        <hpid>DAEGU_SEO_001</hpid>
+        <wgs84Lat>35.89</wgs84Lat>
+        <wgs84Lon>128.56</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>대구광역시 달서구 달구벌대로 000</dutyAddr>
+        <dutyEmcls>G006</dutyEmcls>
+        <dutyEmclsName>지역응급의료센터</dutyEmclsName>
+        <dutyName>달서구병원1</dutyName>
+        <dutyTel1>053-0000-2000</dutyTel1>
+        <dutyTel3>053-0000-2119</dutyTel3>
+        <hpid>DAEGU_DAL_001</hpid>
+        <wgs84Lat>35.80</wgs84Lat>
+        <wgs84Lon>128.54</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>대구광역시 달서구 월배로 000</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyEmclsName>지역응급의료기관</dutyEmclsName>
+        <dutyName>달서구병원2</dutyName>
+        <dutyTel1>053-0000-2001</dutyTel1>
+        <dutyTel3>053-0000-2119</dutyTel3>
+        <hpid>DAEGU_DAL_002</hpid>
+        <wgs84Lat>35.82</wgs84Lat>
+        <wgs84Lon>128.55</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>대구광역시 서구 내당로 000</dutyAddr>
+        <dutyEmcls>G007</dutyEmcls>
+        <dutyEmclsName>지역응급의료기관</dutyEmclsName>
+        <dutyName>서구병원2</dutyName>
+        <dutyTel1>053-0000-1001</dutyTel1>
+        <dutyTel3>053-0000-1119</dutyTel3>
+        <hpid>DAEGU_SEO_002</hpid>
+        <wgs84Lat>35.88</wgs84Lat>
+        <wgs84Lon>128.57</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>4</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>

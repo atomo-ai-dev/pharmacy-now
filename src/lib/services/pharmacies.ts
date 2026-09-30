@@ -6,6 +6,7 @@ import {
   toPharmacyView,
 } from "../model/pharmacy";
 import type { LocationQuery } from "../query";
+import { type Region, regionFromAddress } from "../regions";
 import type { PharmacyView } from "../views";
 import { nearbyRegions, settledItems } from "./regionsNear";
 
@@ -27,14 +28,35 @@ function compact<T>(xs: (T | null)[]): T[] {
   return xs.filter((x): x is T => x !== null);
 }
 
+/**
+ * 주소가 선택한 지역과 일치하는지 확인한다.
+ * 세종특별자치시처럼 sigungu가 없는 경우나, 주소에서 sigungu를 추출할 수 없는 경우는 true를 반환한다.
+ */
+function addressMatchesRegion(address: string, region: Region): boolean {
+  // sigungu가 없는 지역(세종)이면 sido만 확인
+  if (region.sigungu === "") {
+    const parsed = regionFromAddress(address);
+    return parsed !== null && parsed.sido === region.sido;
+  }
+
+  // sigungu가 있는 경우는 sido와 sigungu 모두 확인
+  const parsed = regionFromAddress(address);
+  return parsed !== null && parsed.sido === region.sido && parsed.sigungu === region.sigungu;
+}
+
 export async function findPharmacies(
   source: MedicalDataSource,
   query: LocationQuery,
   now: Date,
 ): Promise<PharmacyView[]> {
   if (query.kind === "region") {
-    const list = compact((await source.pharmaciesByRegion(query.region)).map(pharmacyFromListItem));
-    return sortPharmacies(list.map((p) => toPharmacyView(p, now, query.origin))).slice(
+    const items = (await source.pharmaciesByRegion(query.region))
+      .map(pharmacyFromListItem)
+      .filter((p): p is Pharmacy => p !== null)
+      // 주소로 다시 필터링: 선택한 지역만 남긴다
+      .filter((p) => addressMatchesRegion(p.address, query.region));
+
+    return sortPharmacies(items.map((p) => toPharmacyView(p, now, query.origin))).slice(
       0,
       MAX_RESULTS,
     );

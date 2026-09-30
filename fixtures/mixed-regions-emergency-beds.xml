@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성 데이터: 대구광역시 서구 검색 시 달서구 병상 결과가 섞인 경우. 실제 응답이 아닌 테스트용입니다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyName>서구병원1</dutyName>
+        <hpid>DAEGU_SEO_001</hpid>
+        <hvec>5</hvec>
+        <dutytel3>053-0000-1119</dutytel3>
+        <hvidate>20260928100000</hvidate>
+      </item>
+      <item>
+        <dutyName>달서구병원1</dutyName>
+        <hpid>DAEGU_DAL_001</hpid>
+        <hvec>3</hvec>
+        <dutytel3>053-0000-2119</dutytel3>
+        <hvidate>20260928100000</hvidate>
+      </item>
+      <item>
+        <dutyName>달서구병원2</dutyName>
+        <hpid>DAEGU_DAL_002</hpid>
+        <hvec>0</hvec>
+        <dutytel3>053-0000-2119</dutytel3>
+        <hvidate>20260928100000</hvidate>
+      </item>
+      <item>
+        <dutyName>서구병원2</dutyName>
+        <hpid>DAEGU_SEO_002</hpid>
+        <hvec>2</hvec>
+        <dutytel3>053-0000-1119</dutytel3>
+        <hvidate>20260928100000</hvidate>
+      </item>
+    </items>
+    <numOfRows>4</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>
