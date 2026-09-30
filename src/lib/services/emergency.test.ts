@@ -92,3 +92,33 @@ describe("sortEmergencyRooms", () => {
     expect(sorted.map((x) => x.id)).toEqual(["d", "c", "b", "a"]);
   });
 });
+
+describe("findEmergencyRooms — 혼합 지역 필터링", () => {
+  it("대구광역시 서구 검색 시 달서구 결과는 제외한다", async () => {
+    const { readFixture } = await import("@/test/fixtures");
+    const { parseApiResponse } = await import("@/lib/api/xml");
+
+    const listData = parseApiResponse(readFixture("mixed-regions-emergency-list.xml")).items;
+    const bedsData = parseApiResponse(readFixture("mixed-regions-emergency-beds.xml")).items;
+
+    const source: MedicalDataSource = {
+      pharmaciesByRegion: (r) => demoSource().pharmaciesByRegion(r),
+      pharmaciesNear: (p) => demoSource().pharmaciesNear(p),
+      emergencyRoomsByRegion: async () => listData,
+      emergencyRoomsNear: (p) => demoSource().emergencyRoomsNear(p),
+      emergencyBeds: async () => bedsData,
+    };
+
+    const items = await findEmergencyRooms(
+      source,
+      { kind: "region", region: { sido: "대구광역시", sigungu: "서구" }, origin: null },
+      NOW,
+    );
+
+    // 서구 기관만 남아야 함
+    expect(items.every((r) => r.address === null || r.address.includes("서구"))).toBe(true);
+    expect(items.some((r) => r.address?.includes("달서구"))).toBe(false);
+    // 서구 2개만 남아야 함
+    expect(items.length).toBe(2);
+  });
+});
