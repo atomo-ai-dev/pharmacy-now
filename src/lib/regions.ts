@@ -366,10 +366,18 @@ export function regionFromAddress(address: string): Region | null {
     const list = REGIONS[sido] ?? [];
     if (list.length === 0) return { sido, sigungu: "" };
     if (second && list.includes(second)) return { sido, sigungu: second };
+    // 새 지역명이 없으면 구 지역명을 확인한다 (예: 인천광역시-중구)
+    if (second) {
+      const key = `${sido}-${second}`;
+      const legacy = LEGACY_REGION_NAMES[key];
+      if (legacy) {
+        return legacy;
+      }
+    }
     return null;
   }
 
-  // 구 지역명을 확인한다.
+  // 구 지역명을 확인한다 (sido 자체가 구 지역명인 경우).
   const key = second ? `${sido}-${second}` : sido;
   const legacy = LEGACY_REGION_NAMES[key];
   if (legacy) {

@@ -53,3 +53,54 @@ describe("regionFromAddress", () => {
     expect(regionFromAddress("")).toBeNull();
   });
 });
+
+describe("regionFromAddress — 구 지역명 (2026-07-01 이전)", () => {
+  it("광주광역시 서구 주소 → 전남광주통합특별시 서구", () => {
+    expect(regionFromAddress("광주광역시 서구 상무중앙로 95 (치평동)")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "서구",
+    });
+  });
+
+  it("광주광역시 동구 → 전남광주통합특별시 동구", () => {
+    expect(regionFromAddress("광주광역시 동구 계림로 100")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "동구",
+    });
+  });
+
+  it("전라남도 순천시 주소 → 전남광주통합특별시 순천시", () => {
+    expect(regionFromAddress("전라남도 순천시 중앙동 50")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "순천시",
+    });
+  });
+
+  it("전라남도 목포시 → 전남광주통합특별시 목포시", () => {
+    expect(regionFromAddress("전라남도 목포시 해양로 200")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "목포시",
+    });
+  });
+
+  it("인천광역시 중구 주소 → 인천광역시 제물포구 (기본값, 주소로 필터링 필요)", () => {
+    expect(regionFromAddress("인천광역시 중구 인수로 100")).toEqual({
+      sido: "인천광역시",
+      sigungu: "제물포구",
+    });
+  });
+
+  it("인천광역시 동구 주소 → 인천광역시 영종구", () => {
+    expect(regionFromAddress("인천광역시 동구 신흥로 50")).toEqual({
+      sido: "인천광역시",
+      sigungu: "영종구",
+    });
+  });
+
+  it("인천광역시 서구 주소 → 인천광역시 서해구 (기본값, 주소로 필터링 필요)", () => {
+    expect(regionFromAddress("인천광역시 서구 경서로 300")).toEqual({
+      sido: "인천광역시",
+      sigungu: "서해구",
+    });
+  });
+});

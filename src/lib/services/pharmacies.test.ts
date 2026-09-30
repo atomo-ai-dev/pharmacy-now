@@ -106,3 +106,43 @@ describe("findPharmacies — 내 위치", () => {
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
   });
 });
+
+describe("findPharmacies — 구 지역명 (2026-07-01 이전)", () => {
+  it("영종구 선택 시 옛 이름 동구 응답의 영종 주소 약국이 나온다", async () => {
+    const { legacyPharmaciesSource } = await import("@/test/fixtures");
+    const items = await findPharmacies(
+      legacyPharmaciesSource(),
+      { kind: "region", region: { sido: "인천광역시", sigungu: "영종구" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    // 영종구 선택 시 구 지역명 중구/동구 응답을 모두 조회하고
+    // 동구 주소 약국(hpid: INC0002, INC0004)이 나와야 한다
+    const ids = items.map((p) => p.id);
+    expect(ids).toContain("INC0002");
+    expect(ids).toContain("INC0004");
+    // 중구 주소 약국(hpid: INC0001, INC0003)은 나오지 않아야 한다
+    expect(ids).not.toContain("INC0001");
+    expect(ids).not.toContain("INC0003");
+  });
+
+  it("광주 상무지구 좌표 조회에서 주소로 지역을 판정한다", async () => {
+    const { gwangjuLegacyPharmaciesSource } = await import("@/test/fixtures");
+    // 광주 상무지구 좌표
+    const point = { lat: 35.1595, lon: 126.8526 };
+    const items = await findPharmacies(
+      gwangjuLegacyPharmaciesSource(),
+      { kind: "point", point },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    // 위치 조회 결과에 구 지역명 주소가 들어있고,
+    // regionFromAddress가 이를 새 지역명으로 변환해서 목록 조회를 시도해야 한다.
+    expect(items.length).toBeGreaterThan(0);
+    const byName = new Map(items.map((p) => [p.name, p]));
+    const hwasalPharm = byName.get("햇살약국");
+    expect(hwasalPharm).toBeDefined();
+    // 주소가 정확히 파싱되었는지 확인
+    if (hwasalPharm) {
+      expect(hwasalPharm.address).toContain("광주광역시");
+    }
+  });
+});
