@@ -4,6 +4,25 @@ import { type Region, regionFromAddress } from "../regions";
 import type { MedicalDataSource } from "./source";
 import { parseApiResponse, type RawItem } from "./xml";
 
+/**
+ * 약국 데이터용 새 지역명에서 옛 지역명(2026-07-01 개편 이전)으로의 매핑.
+ * 약국 API 응답이 대부분 옛 이름을 쓰므로, 새 지역 조회 시 옛 이름도 함께 조회해서 결과를 합친다.
+ */
+const NEW_TO_OLD_PHARMACY_REGIONS: Readonly<Record<string, Readonly<Region[]>>> = {
+  전남광주통합특별시: [
+    { sido: "광주광역시", sigungu: "동구" },
+    { sido: "광주광역시", sigungu: "남구" },
+    { sido: "광주광역시", sigungu: "서구" },
+    { sido: "광주광역시", sigungu: "북구" },
+    { sido: "광주광역시", sigungu: "광산구" },
+    { sido: "전라남도", sigungu: "" },
+  ],
+  제물포구: [{ sido: "인천광역시", sigungu: "중구" }],
+  영종구: [{ sido: "인천광역시", sigungu: "동구" }],
+  서해구: [{ sido: "인천광역시", sigungu: "서구" }],
+  검단구: [{ sido: "인천광역시", sigungu: "서구" }],
+};
+
 /** 데모 데이터 파일 이름 (fixtures/demo/*.xml) */
 export const DEMO_FILES = {
   pharmacies: "pharmacies.xml",
@@ -60,7 +79,24 @@ export class FixtureSource implements MedicalDataSource {
   }
 
   async pharmaciesByRegion(r: Region): Promise<RawItem[]> {
-    return this.items(DEMO_FILES.pharmacies).filter((i) => sameRegion(i.dutyaddr, r));
+    const items = this.items(DEMO_FILES.pharmacies);
+    const results = items.filter((i) => sameRegion(i.dutyaddr, r));
+
+    const oldRegions =
+      NEW_TO_OLD_PHARMACY_REGIONS[r.sigungu] ?? NEW_TO_OLD_PHARMACY_REGIONS[r.sido];
+    if (!oldRegions) return results;
+
+    const oldResults = items.filter((i) => oldRegions.some((old) => sameRegion(i.dutyaddr, old)));
+
+    const seen = new Set(results.map((i) => i.hpid));
+    for (const item of oldResults) {
+      if (!seen.has(item.hpid)) {
+        results.push(item);
+        seen.add(item.hpid);
+      }
+    }
+
+    return results;
   }
 
   async pharmaciesNear(p: LatLon): Promise<RawItem[]> {

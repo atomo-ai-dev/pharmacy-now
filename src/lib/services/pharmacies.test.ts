@@ -1,4 +1,7 @@
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { describe, expect, it, vi } from "vitest";
+import { FixtureSource } from "@/lib/api/fixtureSource";
 import type { MedicalDataSource } from "@/lib/api/source";
 import { kstDateTime } from "@/lib/time/kst";
 import { demoSource } from "@/test/fixtures";
@@ -104,5 +107,71 @@ describe("findPharmacies — 내 위치", () => {
     };
     await findPharmacies(source, { kind: "point", point: JONGNO3GA }, kstDateTime(2026, 9, 28, 12));
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
+  });
+});
+
+describe("findPharmacies — 옛 지역명 처리 (2026-07-01 개편)", () => {
+  function oldNamesSource(): FixtureSource {
+    const ROOT = path.join(process.cwd(), "fixtures");
+    return new FixtureSource((file) => {
+      if (file === "pharmacies.xml") {
+        return readFileSync(path.join(ROOT, "demo/pharmacies-old-names.xml"), "utf8");
+      }
+      return readFileSync(path.join(ROOT, `demo/${file}`), "utf8");
+    });
+  }
+
+  it("영종구 선택 시 옛 이름 동구 주소의 약국도 나온다", async () => {
+    const items = await findPharmacies(
+      oldNamesSource(),
+      { kind: "region", region: { sido: "인천광역시", sigungu: "영종구" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    const names = items.map((p) => p.name);
+    expect(names).toContain("영종약국");
+    expect(items.some((p) => p.name === "영종약국" && p.address.includes("영종대로"))).toBe(true);
+  });
+
+  it("제물포구 선택 시 옛 이름 중구 주소의 약국들도 나온다", async () => {
+    const items = await findPharmacies(
+      oldNamesSource(),
+      { kind: "region", region: { sido: "인천광역시", sigungu: "제물포구" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    const names = items.map((p) => p.name);
+    expect(names).toContain("중구약국");
+    expect(names).toContain("차이나타운약국");
+  });
+
+  it("전남광주통합특별시 서구 선택 시 옛 이름 광주광역시 서구 약국이 나온다", async () => {
+    const items = await findPharmacies(
+      oldNamesSource(),
+      {
+        kind: "region",
+        region: { sido: "전남광주통합특별시", sigungu: "서구" },
+        origin: null,
+      },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    const names = items.map((p) => p.name);
+    expect(names).toContain("햇살약국");
+  });
+
+  it("위치 조회에서 옛 지역명 주소로부터 목록 보강이 일어난다", async () => {
+    const GWANGJU = { lat: 35.16, lon: 126.85 };
+    const items = await findPharmacies(
+      oldNamesSource(),
+      { kind: "point", point: GWANGJU },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    const names = items.map((p) => p.name);
+    expect(names.length).toBeGreaterThan(0);
+
+    const gwangjuItems = items.filter((p) => p.address.includes("광주"));
+    expect(gwangjuItems.length).toBeGreaterThan(0);
+    expect(gwangjuItems.some((p) => p.address.includes("서구") || p.address.includes("동구"))).toBe(
+      true,
+    );
   });
 });

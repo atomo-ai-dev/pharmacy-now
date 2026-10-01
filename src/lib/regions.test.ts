@@ -52,4 +52,40 @@ describe("regionFromAddress", () => {
     expect(regionFromAddress("서울특별시 없는구 1")).toBeNull();
     expect(regionFromAddress("")).toBeNull();
   });
+
+  it("옛 지역명(2026-07-01 개편 이전) 주소를 새 지역명으로 변환한다", () => {
+    // 광주 옛 이름 → 새 이름
+    expect(regionFromAddress("광주광역시 서구 상무중앙로 95")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "서구",
+    });
+    expect(regionFromAddress("광주광역시 동구 동명로 100")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "동구",
+    });
+    expect(regionFromAddress("광주광역시 남구 남부순환로 200")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "남구",
+    });
+
+    // 전라남도 → 전남광주통합특별시
+    expect(regionFromAddress("전라남도 순천시 매곡동 100")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "",
+    });
+
+    // 인천 옛 이름 → 새 이름
+    expect(regionFromAddress("인천광역시 중구 차이나타운로 200")).toEqual({
+      sido: "인천광역시",
+      sigungu: "제물포구",
+    });
+    expect(regionFromAddress("인천광역시 동구 영종대로 300")).toEqual({
+      sido: "인천광역시",
+      sigungu: "영종구",
+    });
+    expect(regionFromAddress("인천광역시 서구 서해대로 400")).toEqual({
+      sido: "인천광역시",
+      sigungu: "서해구",
+    });
+  });
 });

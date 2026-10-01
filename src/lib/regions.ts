@@ -252,6 +252,35 @@ export interface Region {
   sigungu: string;
 }
 
+/**
+ * 약국 데이터용 옛 지역명(2026-07-01 개편 이전)에서 새 지역명(개편 이후)으로의 매핑.
+ * 약국 API 응답이 대부분 옛 이름을 쓰므로, regionFromAddress 에서 옛 이름을 새 이름으로 변환할 때 쓴다.
+ */
+const OLD_TO_NEW_REGIONS: Readonly<Record<string, Readonly<Record<string, string | null>>>> = {
+  광주광역시: {
+    "": "전남광주통합특별시",
+    동구: "동구",
+    남구: "남구",
+    서구: "서구",
+    북구: "북구",
+    광산구: "광산구",
+  },
+  전라남도: {
+    "": "전남광주통합특별시",
+  },
+};
+
+/**
+ * 새 지역명(개편 이후)의 새 sigungu 이름에서 옛 sigungu 이름(개편 이전)으로의 역매핑.
+ * 약국 API 응답에서 "인천광역시 중구" 같이 새 sido지만 옛 sigungu인 경우를 처리한다.
+ */
+const NEW_SIGUNGU_TO_OLD: Readonly<Record<string, string[]>> = {
+  제물포구: ["중구"],
+  영종구: ["동구"],
+  서해구: ["서구"],
+  검단구: ["서구"],
+};
+
 export function isKnownRegion(r: Region): boolean {
   const list = REGIONS[r.sido];
   if (!list) return false;
@@ -260,13 +289,44 @@ export function isKnownRegion(r: Region): boolean {
 
 /**
  * 주소 앞머리에서 시도·시군구를 뽑는다. "서울특별시 강남구 일원동 50" → 서울특별시/강남구.
+ * 약국 위치 조회 응답 주소에는 개편 전 지역명이 섞여 있으므로, 옛 이름도 인식해서 새 이름으로 변환한다.
  * 위치 검색 결과의 주소로 해당 지역 목록을 다시 조회할 때 쓴다.
  */
 export function regionFromAddress(address: string): Region | null {
   const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
-  const list = REGIONS[sido] ?? [];
-  if (list.length === 0) return { sido, sigungu: "" };
-  if (second && list.includes(second)) return { sido, sigungu: second };
-  return null;
+  if (!sido) return null;
+
+  if (sido in REGIONS) {
+    const list = REGIONS[sido] ?? [];
+    if (list.length === 0) return { sido, sigungu: "" };
+    if (second && list.includes(second)) return { sido, sigungu: second };
+
+    if (second) {
+      for (const [newSigungu, oldSigungus] of Object.entries(NEW_SIGUNGU_TO_OLD)) {
+        if (oldSigungus.includes(second)) {
+          return { sido, sigungu: newSigungu };
+        }
+      }
+    }
+    return null;
+  }
+
+  const oldToNew = OLD_TO_NEW_REGIONS[sido];
+  if (!oldToNew) return null;
+
+  if (second && oldToNew[second]) {
+    const sigungu = oldToNew[second];
+    if (!sigungu) return null;
+    return { sido: "전남광주통합특별시", sigungu };
+  }
+
+  const newSido = oldToNew[""];
+  if (!newSido) return null;
+
+  if (second) {
+    const sigungu = oldToNew[second];
+    if (sigungu) return { sido: newSido, sigungu };
+  }
+
+  return { sido: newSido, sigungu: "" };
 }
