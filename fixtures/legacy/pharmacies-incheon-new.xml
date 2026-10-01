@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성(synthetic) 데이터: 2026-07-01 행정구역 개편 이전 인천 중구 약국 목록 응답 -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <!-- 중구 address (제물포구로 매핑): 제물포구 선택 시 나온다 -->
+      <item>
+        <dutyAddr>인천광역시 중구 인수로 100</dutyAddr>
+        <dutyName>인수로약국</dutyName>
+        <dutyTel1>032-762-1111</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>1800</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>1800</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>1800</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>1800</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>1800</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1300</dutyTime6c>
+        <dutyTime7s></dutyTime7s>
+        <dutyTime7c></dutyTime7c>
+        <dutyTime8s></dutyTime8s>
+        <dutyTime8c></dutyTime8c>
+        <hpid>INC0001</hpid>
+        <wgs84Lat>37.2752</wgs84Lat>
+        <wgs84Lon>126.6186</wgs84Lon>
+      </item>
+      <!-- 중구 address with 영종 (영종구로 매핑): 영종구 선택 시만 나온다 -->
+      <item>
+        <dutyAddr>인천광역시 중구 영종국제도시 신흥로 50</dutyAddr>
+        <dutyName>신흥약국</dutyName>
+        <dutyTel1>032-751-2222</dutyTel1>
+        <dutyTime1s>0800</dutyTime1s>
+        <dutyTime1c>2000</dutyTime1c>
+        <dutyTime2s>0800</dutyTime2s>
+        <dutyTime2c>2000</dutyTime2c>
+        <dutyTime3s>0800</dutyTime3s>
+        <dutyTime3c>2000</dutyTime3c>
+        <dutyTime4s>0800</dutyTime4s>
+        <dutyTime4c>2000</dutyTime4c>
+        <dutyTime5s>0800</dutyTime5s>
+        <dutyTime5c>2000</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1800</dutyTime7c>
+        <dutyTime8s></dutyTime8s>
+        <dutyTime8c></dutyTime8c>
+        <hpid>INC0002</hpid>
+        <wgs84Lat>37.2456</wgs84Lat>
+        <wgs84Lon>126.6289</wgs84Lon>
+      </item>
+      <!-- 중구 address (제물포구로 매핑): 제물포구 선택 시 나온다 -->
+      <item>
+        <dutyAddr>인천광역시 중구 해안로 200</dutyAddr>
+        <dutyName>해안약국</dutyName>
+        <dutyTel1>032-762-3333</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1400</dutyTime6c>
+        <dutyTime7s></dutyTime7s>
+        <dutyTime7c></dutyTime7c>
+        <dutyTime8s></dutyTime8s>
+        <dutyTime8c></dutyTime8c>
+        <hpid>INC0003</hpid>
+        <wgs84Lat>37.2634</wgs84Lat>
+        <wgs84Lon>126.6045</wgs84Lon>
+      </item>
+      <!-- 중구 address with 영종 (영종구로 매핑): 영종구 선택 시만 나온다 -->
+      <item>
+        <dutyAddr>인천광역시 중구 영종대로 인천대로 300</dutyAddr>
+        <dutyName>대로약국</dutyName>
+        <dutyTel1>032-751-4444</dutyTel1>
+        <dutyTime1s>0700</dutyTime1s>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime2s>0700</dutyTime2s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime3s>0700</dutyTime3s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime4s>0700</dutyTime4s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime5s>0700</dutyTime5s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime6s>0800</dutyTime6s>
+        <dutyTime6c>2000</dutyTime6c>
+        <dutyTime7s>0800</dutyTime7s>
+        <dutyTime7c>2000</dutyTime7c>
+        <dutyTime8s></dutyTime8s>
+        <dutyTime8c></dutyTime8c>
+        <hpid>INC0004</hpid>
+        <wgs84Lat>37.2389</wgs84Lat>
+        <wgs84Lon>126.6234</wgs84Lon>
+      </item>
+    </items>
+    <totalCount>4</totalCount>
+  </body>
+</response>

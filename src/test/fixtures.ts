@@ -18,3 +18,40 @@ export function fixtureItems(rel: string): RawItem[] {
 export function demoSource(clock: (() => number) | null = null): FixtureSource {
   return new FixtureSource((file) => readFixture(`demo/${file}`), clock);
 }
+
+/** 특정 fixture 디렉토리에서 데이터 소스를 생성한다. */
+export function fixtureSource(dir: string, clock: (() => number) | null = null): FixtureSource {
+  return new FixtureSource((file) => readFixture(`${dir}/${file}`), clock);
+}
+
+/** 구 지역명 fixture를 위한 데이터 소스. */
+export function legacyPharmaciesSource(): FixtureSource {
+  return new FixtureSource((file) => {
+    if (file === "pharmacies.xml") {
+      return readFixture("legacy/pharmacies-incheon-old-names.xml");
+    }
+    if (file === "emergency-list.xml") {
+      return readFixture("demo/emergency-list.xml");
+    }
+    if (file === "emergency-beds.xml") {
+      return readFixture("demo/emergency-beds.xml");
+    }
+    throw new Error(`Unknown file: ${file}`);
+  });
+}
+
+/** 광주 구 지역명 fixture를 위한 데이터 소스. */
+export function gwangjuLegacyPharmaciesSource(): FixtureSource {
+  return new FixtureSource((file) => {
+    if (file === "pharmacies.xml") {
+      return readFixture("legacy/pharmacies-gwangju-old-names.xml");
+    }
+    if (file === "emergency-list.xml") {
+      return readFixture("demo/emergency-list.xml");
+    }
+    if (file === "emergency-beds.xml") {
+      return readFixture("demo/emergency-beds.xml");
+    }
+    throw new Error(`Unknown file: ${file}`);
+  });
+}
