@@ -259,14 +259,44 @@ export function isKnownRegion(r: Region): boolean {
 }
 
 /**
+ * 2026-07-01 개편 전 옛 인천 구 이름 → 새 구 이름. 약국 데이터가 아직 옛 이름을 쓰기 때문에
+ * 위치 조회 주소에도 옛 이름이 섞여 온다. 중구·서구는 두 새 구로 나뉘었으므로 동 이름으로 가른다.
+ */
+const INCHEON_OLD_GU: Readonly<Record<string, (rest: string) => string>> = {
+  중구: (rest) => (rest.includes("영종") ? "영종구" : "제물포구"),
+  동구: () => "제물포구",
+  서구: (rest) => (rest.includes("검단") ? "검단구" : "서해구"),
+};
+
+/**
  * 주소 앞머리에서 시도·시군구를 뽑는다. "서울특별시 강남구 일원동 50" → 서울특별시/강남구.
  * 위치 검색 결과의 주소로 해당 지역 목록을 다시 조회할 때 쓴다.
+ *
+ * 약국 데이터는 2026-07-01 개편 후에도 상당수가 옛 지역 이름(광주광역시·전라남도, 인천 중구·
+ * 동구·서구)을 쓰므로, 옛 이름 주소도 새 지역으로 옮겨 돌려준다.
  */
 export function regionFromAddress(address: string): Region | null {
-  const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
-  const list = REGIONS[sido] ?? [];
-  if (list.length === 0) return { sido, sigungu: "" };
-  if (second && list.includes(second)) return { sido, sigungu: second };
+  const [sido, second, ...rest] = address.trim().split(/\s+/);
+  if (!sido) return null;
+
+  if (sido in REGIONS) {
+    const list = REGIONS[sido] ?? [];
+    if (list.length === 0) return { sido, sigungu: "" };
+    if (second && list.includes(second)) return { sido, sigungu: second };
+    const oldGu = sido === "인천광역시" && second ? INCHEON_OLD_GU[second] : undefined;
+    if (oldGu) {
+      return { sido, sigungu: oldGu(rest.join(" ")) };
+    }
+    return null;
+  }
+
+  if (
+    (sido === "광주광역시" || sido === "전라남도") &&
+    second &&
+    REGIONS.전남광주통합특별시?.includes(second)
+  ) {
+    return { sido: "전남광주통합특별시", sigungu: second };
+  }
+
   return null;
 }

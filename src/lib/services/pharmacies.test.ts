@@ -1,8 +1,21 @@
 import { describe, expect, it, vi } from "vitest";
+import { DataGoKrClient, type FetchLike } from "@/lib/api/client";
 import type { MedicalDataSource } from "@/lib/api/source";
 import { kstDateTime } from "@/lib/time/kst";
-import { demoSource } from "@/test/fixtures";
+import { demoSource, readFixture } from "@/test/fixtures";
 import { findPharmacies } from "./pharmacies";
+
+/** Q0/Q1 또는 좌표로 응답 XML 을 고르는 가짜 fetch. 옛 지역 이름 보정 테스트에 쓴다. */
+function fixtureRouterFetch(byQuery: Record<string, string>, fallback: string): FetchLike {
+  return vi.fn(async (url) => {
+    const u = new URL(url);
+    const key =
+      u.searchParams.has("WGS84_LAT") && u.pathname.includes("Lcinfo")
+        ? "near"
+        : `${u.searchParams.get("Q0")}/${u.searchParams.get("Q1")}`;
+    return { ok: true, status: 200, text: async () => readFixture(byQuery[key] ?? fallback) };
+  });
+}
 
 // 2026-09-28 월요일
 const JONGNO3GA = { lat: 37.5704, lon: 126.9921 };
@@ -104,5 +117,44 @@ describe("findPharmacies — 내 위치", () => {
     };
     await findPharmacies(source, { kind: "point", point: JONGNO3GA }, kstDateTime(2026, 9, 28, 12));
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
+  });
+});
+
+describe("findPharmacies — 2026-07-01 개편 전 옛 지역 이름 (약국 데이터)", () => {
+  it("영종구 선택 시 옛 이름 중구 응답에서 영종 주소 약국만 나온다", async () => {
+    const fetch = fixtureRouterFetch(
+      { "인천광역시/중구": "synthetic/pharmacy-list-incheon-jung-old.xml" },
+      "errors/empty-items.xml",
+    );
+    const client = new DataGoKrClient({ serviceKey: "test-key", fetch });
+
+    const items = await findPharmacies(
+      client,
+      { kind: "region", region: { sido: "인천광역시", sigungu: "영종구" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    expect(items.map((p) => p.name)).toEqual(["(합성) 영종공항약국"]);
+  });
+
+  it("광주 좌표 조회는 옛 이름 응답으로도 목록 보강(요일별 운영시간)이 일어난다", async () => {
+    const fetch = fixtureRouterFetch(
+      {
+        near: "synthetic/pharmacy-location-gwangju.xml",
+        "광주광역시/서구": "synthetic/pharmacy-list-gwangju-seogu-old.xml",
+      },
+      "errors/empty-items.xml",
+    );
+    const client = new DataGoKrClient({ serviceKey: "test-key", fetch });
+
+    const items = await findPharmacies(
+      client,
+      { kind: "point", point: { lat: 35.1595, lon: 126.8526 } },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({ name: "(합성) 햇살약국" });
+    expect(items[0]?.weeklyHours).not.toBeNull();
   });
 });

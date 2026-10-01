@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  합성(synthetic) 데이터 — 실제 API 응답을 녹화한 것이 아니다. 서비스 키 없음.
+  2026-07-01 개편 이후에도 약국 위치정보 조회(getParmacyLcinfoInqire)가 광주 상무지구 좌표
+  인근에서 옛 이름 주소("광주광역시 서구 …")를 돌려주는 상황을 흉내낸다. 위치정보 조회에는
+  요일별 운영시간이 없어, 목록 조회로 보강되는지를 테스트한다.
+-->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <cnt>853</cnt>
+        <distance>0.63</distance>
+        <dutyAddr>광주광역시 서구 상무중앙로 95 (치평동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(합성) 햇살약국</dutyName>
+        <dutyTel1>062-000-2001</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>SYN-GJ-0001</hpid>
+        <latitude>35.1554912284</latitude>
+        <longitude>126.8477707013</longitude>
+        <rnum>1</rnum>
+        <startTime>0700</startTime>
+      </item>
+    </items>
+    <numOfRows>1</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>1</totalCount>
+  </body>
+</response>

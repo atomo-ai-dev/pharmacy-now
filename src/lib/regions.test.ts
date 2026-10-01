@@ -52,4 +52,42 @@ describe("regionFromAddress", () => {
     expect(regionFromAddress("서울특별시 없는구 1")).toBeNull();
     expect(regionFromAddress("")).toBeNull();
   });
+
+  describe("2026-07-01 개편 전 옛 이름 주소 (약국 데이터가 아직 옛 이름을 쓴다)", () => {
+    it.each([
+      ["광주광역시 서구 상무중앙로 95 (치평동)", "전남광주통합특별시", "서구"],
+      ["전라남도 순천시 조례동 1", "전남광주통합특별시", "순천시"],
+    ])("%s", (addr, sido, sigungu) => {
+      expect(regionFromAddress(addr)).toEqual({ sido, sigungu });
+    });
+
+    it("인천 옛 중구는 영종 주소만 영종구, 나머지는 제물포구", () => {
+      expect(regionFromAddress("인천광역시 중구 영종해안남로 123 (운서동)")).toEqual({
+        sido: "인천광역시",
+        sigungu: "영종구",
+      });
+      expect(regionFromAddress("인천광역시 중구 신포로 15 (해안동1가)")).toEqual({
+        sido: "인천광역시",
+        sigungu: "제물포구",
+      });
+    });
+
+    it("인천 옛 동구는 제물포구로 옮긴다", () => {
+      expect(regionFromAddress("인천광역시 동구 창영동 60 (우각로)")).toEqual({
+        sido: "인천광역시",
+        sigungu: "제물포구",
+      });
+    });
+
+    it("인천 옛 서구는 검단 주소만 검단구, 나머지는 서해구", () => {
+      expect(regionFromAddress("인천광역시 서구 검단로 1 (대곡동)")).toEqual({
+        sido: "인천광역시",
+        sigungu: "검단구",
+      });
+      expect(regionFromAddress("인천광역시 서구 서곶로 1 (가정동)")).toEqual({
+        sido: "인천광역시",
+        sigungu: "서해구",
+      });
+    });
+  });
 });

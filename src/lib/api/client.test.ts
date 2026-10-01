@@ -58,6 +58,39 @@ describe("DataGoKrClient", () => {
     expect(url.searchParams.has("Q1")).toBe(false);
   });
 
+  it("약국 지역 조회: 옛 지역 이름도 함께 불러 hpid 로 합치고, 옛 구가 나뉜 경우 주소로 거른다", async () => {
+    const fetch = vi.fn<FetchLike>(async (url) => {
+      const u = new URL(url);
+      const q0 = u.searchParams.get("Q0");
+      const q1 = u.searchParams.get("Q1");
+      const body =
+        q0 === "인천광역시" && q1 === "중구"
+          ? readFixture("synthetic/pharmacy-list-incheon-jung-old.xml")
+          : readFixture("errors/empty-items.xml");
+      return { ok: true, status: 200, text: async () => body };
+    });
+    const client = new DataGoKrClient({ serviceKey: KEY, fetch });
+
+    const items = await client.pharmaciesByRegion({ sido: "인천광역시", sigungu: "영종구" });
+
+    // 새 이름(영종구) 직접 조회는 비어 있고, 옛 이름(중구) 조회 결과 중 영종 주소만 남는다.
+    expect(items.map((i) => i.hpid)).toEqual(["SYN-IC-0001"]);
+    const calls = fetch.mock.calls.map(([url]) => {
+      const u = new URL(url);
+      return `${u.searchParams.get("Q0")}/${u.searchParams.get("Q1")}`;
+    });
+    expect(calls.sort()).toEqual(["인천광역시/영종구", "인천광역시/중구"]);
+  });
+
+  it("약국 지역 조회: 영향 없는 지역은 추가 조회를 하지 않는다", async () => {
+    const fetch = fakeFetch(readFixture("docs/pharmacy-list.xml"));
+    const client = new DataGoKrClient({ serviceKey: KEY, fetch });
+
+    await client.pharmaciesByRegion({ sido: "서울특별시", sigungu: "종로구" });
+
+    expect(fetch.mock.calls).toHaveLength(1);
+  });
+
   it("HTTP 오류는 ApiError", async () => {
     const client = new DataGoKrClient({ serviceKey: KEY, fetch: fakeFetch("", 500) });
     await expect(
