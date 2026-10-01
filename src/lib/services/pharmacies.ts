@@ -41,10 +41,7 @@ function getLegacyRegionsForPharmacyQuery(region: Region): Region[] {
  * 한 옛 구가 여러 새 구로 나뉜 경우 주소로 필터링한다.
  * 예: 인천광역시 중구 → 제물포구 또는 영종구 (주소로 판별)
  */
-function filterPharmaciesByTargetRegion(
-  pharmacies: Pharmacy[],
-  targetRegion: Region,
-): Pharmacy[] {
+function filterPharmaciesByTargetRegion(pharmacies: Pharmacy[], targetRegion: Region): Pharmacy[] {
   // 인천광역시 제물포구/영종구는 옛 이름 중구에서 매핑되므로,
   // 주소의 실제 지역명으로 필터링한다.
   const shouldFilter =

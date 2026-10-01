@@ -125,6 +125,23 @@ describe("findPharmacies — 구 지역명 (2026-07-01 이전)", () => {
     expect(ids).not.toContain("INC0003");
   });
 
+  it("제물포구 선택 시 옛 이름 중구 응답의 제물포 주소 약국이 나온다", async () => {
+    const { legacyPharmaciesSource } = await import("@/test/fixtures");
+    const items = await findPharmacies(
+      legacyPharmaciesSource(),
+      { kind: "region", region: { sido: "인천광역시", sigungu: "제물포구" }, origin: null },
+      kstDateTime(2026, 9, 28, 12),
+    );
+    // 제물포구 선택 시 구 지역명 중구/동구 응답을 모두 조회하고
+    // 중구 주소 약국(hpid: INC0001, INC0003)이 나와야 한다
+    const ids = items.map((p) => p.id);
+    expect(ids).toContain("INC0001");
+    expect(ids).toContain("INC0003");
+    // 동구 주소 약국(hpid: INC0002, INC0004)은 나오지 않아야 한다
+    expect(ids).not.toContain("INC0002");
+    expect(ids).not.toContain("INC0004");
+  });
+
   it("광주 상무지구 좌표 조회에서 주소로 지역을 판정한다", async () => {
     const { gwangjuLegacyPharmaciesSource } = await import("@/test/fixtures");
     // 광주 상무지구 좌표
@@ -143,6 +160,8 @@ describe("findPharmacies — 구 지역명 (2026-07-01 이전)", () => {
     // 주소가 정확히 파싱되었는지 확인
     if (hwasalPharm) {
       expect(hwasalPharm.address).toContain("광주광역시");
+      // 위치 조회 응답에는 운영시간이 없지만 목록 조회로 채워진다
+      expect(hwasalPharm.weeklyHours).not.toBeNull();
     }
   });
 });

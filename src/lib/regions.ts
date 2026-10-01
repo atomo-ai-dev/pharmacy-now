@@ -52,17 +52,7 @@ export const REGIONS: Readonly<Record<string, readonly string[]>> = {
     "중구",
     "해운대구",
   ],
-  대구광역시: [
-    "군위군",
-    "남구",
-    "달서구",
-    "달성군",
-    "동구",
-    "북구",
-    "서구",
-    "수성구",
-    "중구",
-  ],
+  대구광역시: ["군위군", "남구", "달서구", "달성군", "동구", "북구", "서구", "수성구", "중구"],
   인천광역시: [
     "강화군",
     "검단구",
@@ -76,20 +66,8 @@ export const REGIONS: Readonly<Record<string, readonly string[]>> = {
     "옹진군",
     "제물포구",
   ],
-  대전광역시: [
-    "대덕구",
-    "동구",
-    "서구",
-    "유성구",
-    "중구",
-  ],
-  울산광역시: [
-    "남구",
-    "동구",
-    "북구",
-    "울주군",
-    "중구",
-  ],
+  대전광역시: ["대덕구", "동구", "서구", "유성구", "중구"],
+  울산광역시: ["남구", "동구", "북구", "울주군", "중구"],
   세종특별자치시: [],
   경기도: [
     "가평군",
@@ -263,10 +241,7 @@ export const REGIONS: Readonly<Record<string, readonly string[]>> = {
     "함양군",
     "합천군",
   ],
-  제주특별자치도: [
-    "서귀포시",
-    "제주시",
-  ],
+  제주특별자치도: ["서귀포시", "제주시"],
 };
 
 export const SIDO_LIST: readonly string[] = Object.keys(REGIONS);
@@ -326,7 +301,10 @@ export const LEGACY_PHARMACY_REGIONS: Readonly<Record<string, Region[]>> = {
   "전남광주통합특별시-화순군": [{ sido: "전라남도", sigungu: "화순군" }],
   // 인천광역시 제물포구, 영종구 → 인천광역시 중구
   "인천광역시-제물포구": [{ sido: "인천광역시", sigungu: "중구" }],
-  "인천광역시-영종구": [{ sido: "인천광역시", sigungu: "중구" }],
+  "인천광역시-영종구": [
+    { sido: "인천광역시", sigungu: "중구" },
+    { sido: "인천광역시", sigungu: "동구" },
+  ],
   // 인천광역시 서해구, 검단구 → 인천광역시 서구
   "인천광역시-서해구": [{ sido: "인천광역시", sigungu: "서구" }],
   "인천광역시-검단구": [{ sido: "인천광역시", sigungu: "서구" }],
@@ -371,6 +349,7 @@ export const LEGACY_REGION_NAMES: Readonly<Record<string, Region>> = {
   "전라남도-화순군": { sido: "전남광주통합특별시", sigungu: "화순군" },
   // 인천광역시 중구 → 인천광역시 제물포구 (기본값, 주소로 필터링)
   "인천광역시-중구": { sido: "인천광역시", sigungu: "제물포구" },
+  "인천광역시-동구": { sido: "인천광역시", sigungu: "영종구" },
   // 인천광역시 서구 → 인천광역시 서해구 (기본값, 주소로 필터링)
   "인천광역시-서구": { sido: "인천광역시", sigungu: "서해구" },
 };
