@@ -258,13 +258,78 @@ export function isKnownRegion(r: Region): boolean {
   return list.length === 0 ? r.sigungu === "" : list.includes(r.sigungu);
 }
 
+const UNIFIED_SIDO = "전남광주통합특별시";
+const GWANGJU_GU: readonly string[] = ["광산구", "남구", "동구", "북구", "서구"];
+
+/** 옛 인천 중구 가운데 영종구로 간 곳 (영종도·용유도의 동·도로 이름) */
+const YEONGJONG = /영종|운서|운남|운북|중산동|을왕|남북동|덕교동|무의|용유|공항|하늘달빛|하늘별빛/;
+/** 옛 인천 서구 가운데 검단구로 간 곳 */
+const GEOMDAN = /검단|마전동|당하동|원당동|불로동|대곡동|오류동|왕길동|금곡동|아라동/;
+
+/**
+ * 옛 이름 주소(2026-07-01 이전)를 새 지역으로 옮긴다. 약국 데이터는 아직 대부분 옛 이름을 쓴다.
+ * rest 는 시군구 뒤 주소 — 한 옛 구가 여러 새 구로 나뉜 경우 이것으로 가린다.
+ */
+function currentFromLegacy(sido: string, sigungu: string, rest: string): Region | null {
+  if (sido === "광주광역시") {
+    return GWANGJU_GU.includes(sigungu) ? { sido: UNIFIED_SIDO, sigungu } : null;
+  }
+  if (sido === "전라남도") {
+    const list = REGIONS[UNIFIED_SIDO] ?? [];
+    return !GWANGJU_GU.includes(sigungu) && list.includes(sigungu)
+      ? { sido: UNIFIED_SIDO, sigungu }
+      : null;
+  }
+  if (sido === "인천광역시") {
+    if (sigungu === "중구") return { sido, sigungu: YEONGJONG.test(rest) ? "영종구" : "제물포구" };
+    if (sigungu === "동구") return { sido, sigungu: "제물포구" };
+    if (sigungu === "서구") return { sido, sigungu: GEOMDAN.test(rest) ? "검단구" : "서해구" };
+  }
+  return null;
+}
+
+export interface LegacyRegion {
+  region: Region;
+  /** 이 옛 지역이 여러 새 지역으로 나뉘어, 응답을 주소로 걸러야 한다 */
+  split: boolean;
+}
+
+/**
+ * 약국 조회 전용: 새 지역에 대응하는 옛 이름 지역. 약국 서비스는 개편 뒤에도 대부분 옛 이름으로
+ * 응답하므로 새 이름과 함께 조회한다. 응급의료기관 서비스는 새 이름만 쓰므로 쓰지 않는다.
+ */
+export function legacyPharmacyRegions(r: Region): LegacyRegion[] {
+  if (r.sido === UNIFIED_SIDO) {
+    if (!(REGIONS[UNIFIED_SIDO] ?? []).includes(r.sigungu)) return [];
+    const sido = GWANGJU_GU.includes(r.sigungu) ? "광주광역시" : "전라남도";
+    return [{ region: { sido, sigungu: r.sigungu }, split: false }];
+  }
+  if (r.sido === "인천광역시") {
+    const old = (sigungu: string, split: boolean) => ({ region: { sido: r.sido, sigungu }, split });
+    switch (r.sigungu) {
+      case "제물포구":
+        return [old("중구", true), old("동구", false)];
+      case "영종구":
+        return [old("중구", true)];
+      case "서해구":
+      case "검단구":
+        return [old("서구", true)];
+    }
+  }
+  return [];
+}
+
 /**
  * 주소 앞머리에서 시도·시군구를 뽑는다. "서울특별시 강남구 일원동 50" → 서울특별시/강남구.
  * 위치 검색 결과의 주소로 해당 지역 목록을 다시 조회할 때 쓴다.
+ * 옛 이름 주소("광주광역시 서구 …", "인천광역시 중구 …")는 새 지역으로 옮겨 돌려준다.
  */
 export function regionFromAddress(address: string): Region | null {
-  const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
+  const [sido, second, ...rest] = address.trim().split(/\s+/);
+  if (!sido) return null;
+  const legacy = second ? currentFromLegacy(sido, second, rest.join(" ")) : null;
+  if (legacy) return legacy;
+  if (!(sido in REGIONS)) return null;
   const list = REGIONS[sido] ?? [];
   if (list.length === 0) return { sido, sigungu: "" };
   if (second && list.includes(second)) return { sido, sigungu: second };
