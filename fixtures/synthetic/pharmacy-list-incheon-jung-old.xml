@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  합성(synthetic) 데이터 — 실제 API 응답을 녹화한 것이 아니다. 서비스 키 없음.
+  2026-07-01 행정구역 개편 이후에도 약국 목록정보 조회(getParmacyListInfoInqire)가
+  옛 이름 "인천광역시 중구"로 응답하는 상황을 흉내낸다. 새 구는 중구가 영종구/제물포구로
+  나뉘었으므로, 두 지역 모두에 속하는 주소를 섞어 둔다.
+-->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>인천광역시 중구 영종해안남로 123 (운서동)</dutyAddr>
+        <dutyName>(합성) 영종공항약국</dutyName>
+        <dutyTel1>032-000-1001</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <hpid>SYN-IC-0001</hpid>
+        <wgs84Lat>37.4934</wgs84Lat>
+        <wgs84Lon>126.5466</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 중구 신포로 15 (해안동1가)</dutyAddr>
+        <dutyName>(합성) 신포약국</dutyName>
+        <dutyTel1>032-000-1002</dutyTel1>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime1c>2000</dutyTime1c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime2c>2000</dutyTime2c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime3c>2000</dutyTime3c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime4c>2000</dutyTime4c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime5c>2000</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1700</dutyTime6c>
+        <hpid>SYN-IC-0002</hpid>
+        <wgs84Lat>37.4738</wgs84Lat>
+        <wgs84Lon>126.6212</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>2</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>2</totalCount>
+  </body>
+</response>

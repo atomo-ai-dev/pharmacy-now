@@ -1,7 +1,35 @@
 import type { LatLon } from "../geo/distance";
-import type { Region } from "../regions";
+import { type Region, regionFromAddress } from "../regions";
 import type { MedicalDataSource } from "./source";
 import { ApiError, parseApiResponse, type RawItem } from "./xml";
+
+/**
+ * 2026-07-01 개편 후에도 약국 목록 데이터는 대부분 옛 지역 이름을 쓴다(응급의료기관은 새 이름으로
+ * 완전히 바뀌었다). 새 이름 조회에 더해 옛 이름도 조회해 hpid 로 합친다. 옛 구가 여러 새 구로
+ * 나뉜 경우(인천 중구→제물포구/영종구, 서구→서해구/검단구)는 주소로 걸러 선택한 구만 남긴다.
+ */
+const GWANGJU_GU = new Set(["동구", "서구", "남구", "북구", "광산구"]);
+
+const INCHEON_OLD_PHARMACY_SOURCES: Readonly<Record<string, readonly Region[]>> = {
+  제물포구: [
+    { sido: "인천광역시", sigungu: "중구" },
+    { sido: "인천광역시", sigungu: "동구" },
+  ],
+  영종구: [{ sido: "인천광역시", sigungu: "중구" }],
+  서해구: [{ sido: "인천광역시", sigungu: "서구" }],
+  검단구: [{ sido: "인천광역시", sigungu: "서구" }],
+};
+
+function oldPharmacyRegions(region: Region): readonly Region[] {
+  if (region.sido === "전남광주통합특별시") {
+    const oldSido = GWANGJU_GU.has(region.sigungu) ? "광주광역시" : "전라남도";
+    return [{ sido: oldSido, sigungu: region.sigungu }];
+  }
+  if (region.sido === "인천광역시") {
+    return INCHEON_OLD_PHARMACY_SOURCES[region.sigungu] ?? [];
+  }
+  return [];
+}
 
 /** docs/api.md 에 출처와 함께 정리한 엔드포인트 */
 export const ENDPOINTS = {
@@ -45,13 +73,38 @@ export class DataGoKrClient implements MedicalDataSource {
     this.timeoutMs = opts.timeoutMs ?? 8000;
   }
 
-  pharmaciesByRegion(region: Region): Promise<RawItem[]> {
-    return this.get(ENDPOINTS.pharmacyList, {
-      Q0: region.sido,
-      Q1: region.sigungu,
-      ORD: "NAME",
-      numOfRows: REGION_ROWS,
+  async pharmaciesByRegion(region: Region): Promise<RawItem[]> {
+    const queries = [region, ...oldPharmacyRegions(region)];
+    const batches = await Promise.all(
+      queries.map((q) =>
+        this.get(ENDPOINTS.pharmacyList, {
+          Q0: q.sido,
+          Q1: q.sigungu,
+          ORD: "NAME",
+          numOfRows: REGION_ROWS,
+        }),
+      ),
+    );
+
+    const seen = new Set<string>();
+    const out: RawItem[] = [];
+    batches.forEach((items, i) => {
+      const isOldQuery = i > 0;
+      for (const item of items) {
+        if (isOldQuery) {
+          const resolved = item.dutyaddr ? regionFromAddress(item.dutyaddr) : null;
+          if (!resolved || resolved.sido !== region.sido || resolved.sigungu !== region.sigungu) {
+            continue;
+          }
+        }
+        if (item.hpid) {
+          if (seen.has(item.hpid)) continue;
+          seen.add(item.hpid);
+        }
+        out.push(item);
+      }
     });
+    return out;
   }
 
   pharmaciesNear(point: LatLon): Promise<RawItem[]> {
