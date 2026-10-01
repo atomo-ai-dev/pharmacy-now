@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import * as regions from "./regions";
 import { isKnownRegion, REGIONS, regionFromAddress, SIDO_LIST } from "./regions";
 
 describe("REGIONS", () => {
@@ -51,5 +52,46 @@ describe("regionFromAddress", () => {
     expect(regionFromAddress("평내동 107-1(경춘로 1308번길 8-8)")).toBeNull();
     expect(regionFromAddress("서울특별시 없는구 1")).toBeNull();
     expect(regionFromAddress("")).toBeNull();
+  });
+});
+
+describe("regionFromAddress — 옛 이름 주소 (2026-07 개편 이전)", () => {
+  it.each([
+    ["광주광역시 서구 상무중앙로 95 (치평동)", "전남광주통합특별시", "서구"],
+    ["광주광역시 광산구 수완로 1", "전남광주통합특별시", "광산구"],
+    ["전라남도 순천시 중앙로 1 (장천동)", "전남광주통합특별시", "순천시"],
+    ["인천광역시 중구 신포로 1 (신포동)", "인천광역시", "제물포구"],
+    ["인천광역시 중구 영종대로 1 (운서동)", "인천광역시", "영종구"],
+    ["인천광역시 중구 공항로 272 (운서동)", "인천광역시", "영종구"],
+    ["인천광역시 동구 송림로 1 (송림동)", "인천광역시", "제물포구"],
+    ["인천광역시 서구 완정로 1 (마전동)", "인천광역시", "검단구"],
+    ["인천광역시 서구 청라대로 1 (청라동)", "인천광역시", "서해구"],
+  ])("%s", (addr, sido, sigungu) => {
+    expect(regionFromAddress(addr)).toEqual({ sido, sigungu });
+  });
+
+  it("옛 시도라도 모르는 시군구는 null", () => {
+    expect(regionFromAddress("광주광역시 순천시 1")).toBeNull();
+    expect(regionFromAddress("전라남도 서구 1")).toBeNull();
+  });
+});
+
+describe("legacyPharmacyRegions", () => {
+  const { legacyPharmacyRegions } = regions;
+  const olds = (sido: string, sigungu: string) =>
+    legacyPharmacyRegions({ sido, sigungu }).map((l) => `${l.region.sido} ${l.region.sigungu}`);
+
+  it("새 지역 → 약국 조회에 함께 보낼 옛 이름", () => {
+    expect(olds("전남광주통합특별시", "서구")).toEqual(["광주광역시 서구"]);
+    expect(olds("전남광주통합특별시", "여수시")).toEqual(["전라남도 여수시"]);
+    expect(olds("인천광역시", "제물포구")).toEqual(["인천광역시 중구", "인천광역시 동구"]);
+    expect(olds("인천광역시", "영종구")).toEqual(["인천광역시 중구"]);
+    expect(olds("인천광역시", "서해구")).toEqual(["인천광역시 서구"]);
+    expect(olds("인천광역시", "검단구")).toEqual(["인천광역시 서구"]);
+  });
+
+  it("개편과 무관한 지역은 옛 이름이 없다", () => {
+    expect(olds("서울특별시", "중구")).toEqual([]);
+    expect(olds("인천광역시", "부평구")).toEqual([]);
   });
 });

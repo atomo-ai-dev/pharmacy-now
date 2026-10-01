@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성(synthetic) 데이터: 실제 API 응답 녹화가 아니다. getParmacyLcinfoInqire (약국 위치정보 조회, 광주 상무지구 부근) 응답 모양을 따라 손으로 만들었다.
+     2026-07-01 행정구역 개편 뒤에도 약국 서비스가 옛 지역 이름(광주광역시·전라남도, 인천 중구·동구·서구)
+     주소로 응답하고 일부만 새 이름으로 응답하는 상황을 흉내 낸다. 이름·주소·전화는 실제와 무관하다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <cnt>1</cnt>
+        <distance>0.63</distance>
+        <dutyAddr>광주광역시 서구 상무중앙로 000 (치평동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(합성) 햇빛약국</dutyName>
+        <dutyTel1>062-000-0001</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>SYN00001</hpid>
+        <latitude>35.1555</latitude>
+        <longitude>126.8478</longitude>
+        <startTime>0900</startTime>
+      </item>
+      <item>
+        <cnt>2</cnt>
+        <distance>0.71</distance>
+        <dutyAddr>광주광역시 서구 상무대로 000 (쌍촌동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(합성) 상무온누리약국</dutyName>
+        <dutyTel1>062-000-0002</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>SYN00002</hpid>
+        <latitude>35.1520</latitude>
+        <longitude>126.8590</longitude>
+        <startTime>0900</startTime>
+      </item>
+      <item>
+        <cnt>3</cnt>
+        <distance>0.80</distance>
+        <dutyAddr>전남광주통합특별시 서구 상무자유로 000 (치평동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(합성) 새이름약국</dutyName>
+        <dutyTel1>062-000-0004</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>SYN00004</hpid>
+        <latitude>35.1500</latitude>
+        <longitude>126.8530</longitude>
+        <startTime>0900</startTime>
+      </item>
+      <item>
+        <cnt>4</cnt>
+        <distance>3.10</distance>
+        <dutyAddr>광주광역시 북구 서암대로 000 (용봉동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(합성) 용봉약국</dutyName>
+        <dutyTel1>062-000-0003</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>SYN00003</hpid>
+        <latitude>35.1760</latitude>
+        <longitude>126.9120</longitude>
+        <startTime>0900</startTime>
+      </item>
+    </items>
+    <numOfRows>4</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>4</totalCount>
+  </body>
+</response>

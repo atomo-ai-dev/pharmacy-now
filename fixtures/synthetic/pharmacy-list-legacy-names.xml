@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- 합성(synthetic) 데이터: 실제 API 응답 녹화가 아니다. getParmacyListInfoInqire (약국 목록정보 조회) 응답 모양을 따라 손으로 만들었다.
+     2026-07-01 행정구역 개편 뒤에도 약국 서비스가 옛 지역 이름(광주광역시·전라남도, 인천 중구·동구·서구)
+     주소로 응답하고 일부만 새 이름으로 응답하는 상황을 흉내 낸다. 이름·주소·전화는 실제와 무관하다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>광주광역시 서구 상무중앙로 000 (치평동)</dutyAddr>
+        <dutyName>(합성) 햇빛약국</dutyName>
+        <dutyTel1>062-000-0001</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0700</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0700</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0700</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0700</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0700</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0700</dutyTime6s>
+        <dutyTime7c>1900</dutyTime7c>
+        <dutyTime7s>0700</dutyTime7s>
+        <dutyTime8c>1900</dutyTime8c>
+        <dutyTime8s>0700</dutyTime8s>
+        <hpid>SYN00001</hpid>
+        <wgs84Lat>35.1555</wgs84Lat>
+        <wgs84Lon>126.8478</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>광주광역시 서구 상무대로 000 (쌍촌동)</dutyAddr>
+        <dutyName>(합성) 상무온누리약국</dutyName>
+        <dutyTel1>062-000-0002</dutyTel1>
+        <dutyTime1c>1800</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1800</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1800</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1800</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1800</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00002</hpid>
+        <wgs84Lat>35.1520</wgs84Lat>
+        <wgs84Lon>126.8590</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>광주광역시 북구 서암대로 000 (용봉동)</dutyAddr>
+        <dutyName>(합성) 용봉약국</dutyName>
+        <dutyTel1>062-000-0003</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00003</hpid>
+        <wgs84Lat>35.1760</wgs84Lat>
+        <wgs84Lon>126.9120</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>전남광주통합특별시 서구 상무자유로 000 (치평동)</dutyAddr>
+        <dutyName>(합성) 새이름약국</dutyName>
+        <dutyTel1>062-000-0004</dutyTel1>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>2200</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00004</hpid>
+        <wgs84Lat>35.1500</wgs84Lat>
+        <wgs84Lon>126.8530</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>광주광역시 서구 상무자유로 000 (치평동)</dutyAddr>
+        <dutyName>(합성) 새이름약국</dutyName>
+        <dutyTel1>062-000-0004</dutyTel1>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>2200</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00004</hpid>
+        <wgs84Lat>35.1500</wgs84Lat>
+        <wgs84Lon>126.8530</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>전라남도 순천시 중앙로 000 (장천동)</dutyAddr>
+        <dutyName>(합성) 순천중앙약국</dutyName>
+        <dutyTel1>061-000-0005</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00005</hpid>
+        <wgs84Lat>34.9500</wgs84Lat>
+        <wgs84Lon>127.4870</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 중구 영종대로 000 (운서동)</dutyAddr>
+        <dutyName>(합성) 영종하늘약국</dutyName>
+        <dutyTel1>032-000-0006</dutyTel1>
+        <dutyTime1c>2100</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>2100</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>2100</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>2100</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>2100</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>2100</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00006</hpid>
+        <wgs84Lat>37.4920</wgs84Lat>
+        <wgs84Lon>126.4930</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 중구 공항로 000 (운서동, 인천국제공항 제1여객터미널)</dutyAddr>
+        <dutyName>(합성) 공항약국</dutyName>
+        <dutyTel1>032-000-0007</dutyTel1>
+        <dutyTime1c>2200</dutyTime1c>
+        <dutyTime1s>0600</dutyTime1s>
+        <dutyTime2c>2200</dutyTime2c>
+        <dutyTime2s>0600</dutyTime2s>
+        <dutyTime3c>2200</dutyTime3c>
+        <dutyTime3s>0600</dutyTime3s>
+        <dutyTime4c>2200</dutyTime4c>
+        <dutyTime4s>0600</dutyTime4s>
+        <dutyTime5c>2200</dutyTime5c>
+        <dutyTime5s>0600</dutyTime5s>
+        <dutyTime6c>2200</dutyTime6c>
+        <dutyTime6s>0600</dutyTime6s>
+        <dutyTime7c>2200</dutyTime7c>
+        <dutyTime7s>0600</dutyTime7s>
+        <dutyTime8c>2200</dutyTime8c>
+        <dutyTime8s>0600</dutyTime8s>
+        <hpid>SYN00007</hpid>
+        <wgs84Lat>37.4490</wgs84Lat>
+        <wgs84Lon>126.4510</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 중구 신포로 000 (신포동)</dutyAddr>
+        <dutyName>(합성) 신포약국</dutyName>
+        <dutyTel1>032-000-0008</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00008</hpid>
+        <wgs84Lat>37.4720</wgs84Lat>
+        <wgs84Lon>126.6230</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 동구 송림로 000 (송림동)</dutyAddr>
+        <dutyName>(합성) 송림약국</dutyName>
+        <dutyTel1>032-000-0009</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00009</hpid>
+        <wgs84Lat>37.4780</wgs84Lat>
+        <wgs84Lon>126.6430</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 제물포구 제물량로 000 (북성동)</dutyAddr>
+        <dutyName>(합성) 제물포새이름약국</dutyName>
+        <dutyTel1>032-000-0010</dutyTel1>
+        <dutyTime1c>1800</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1800</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1800</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1800</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1800</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00010</hpid>
+        <wgs84Lat>37.4750</wgs84Lat>
+        <wgs84Lon>126.6180</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 서구 완정로 000 (마전동)</dutyAddr>
+        <dutyName>(합성) 검단마전약국</dutyName>
+        <dutyTel1>032-000-0011</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00011</hpid>
+        <wgs84Lat>37.5970</wgs84Lat>
+        <wgs84Lon>126.6710</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>인천광역시 서구 청라대로 000 (청라동)</dutyAddr>
+        <dutyName>(합성) 청라약국</dutyName>
+        <dutyTel1>032-000-0012</dutyTel1>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime1s>0900</dutyTime1s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime2s>0900</dutyTime2s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime3s>0900</dutyTime3s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime4s>0900</dutyTime4s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime5s>0900</dutyTime5s>
+        <dutyTime6c>1900</dutyTime6c>
+        <dutyTime6s>0900</dutyTime6s>
+        <hpid>SYN00012</hpid>
+        <wgs84Lat>37.5350</wgs84Lat>
+        <wgs84Lon>126.6560</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>13</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>13</totalCount>
+  </body>
+</response>
