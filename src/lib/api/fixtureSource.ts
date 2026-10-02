@@ -1,6 +1,6 @@
 import { haversineKm, type LatLon, parseCoord } from "../geo/distance";
 import { parseHvidate } from "../model/emergency";
-import { type Region, regionFromAddress } from "../regions";
+import { isOldPharmacyRegionName, type Region, regionFromAddress } from "../regions";
 import type { MedicalDataSource } from "./source";
 import { parseApiResponse, type RawItem } from "./xml";
 
@@ -14,7 +14,17 @@ export const DEMO_FILES = {
 export type FixtureReader = (file: string) => string;
 
 function sameRegion(address: string | undefined, r: Region): boolean {
-  const found = address ? regionFromAddress(address) : null;
+  if (!address) return false;
+  const parts = address.trim().split(/\s+/);
+  const [addressSido, addressSigungu] = parts;
+
+  if (!addressSido) return false;
+
+  if (isOldPharmacyRegionName(addressSido)) {
+    return addressSido === r.sido && (r.sigungu === "" || addressSigungu === r.sigungu);
+  }
+
+  const found = regionFromAddress(address);
   return (
     found !== null && found.sido === r.sido && (r.sigungu === "" || found.sigungu === r.sigungu)
   );

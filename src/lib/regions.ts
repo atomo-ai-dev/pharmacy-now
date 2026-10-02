@@ -252,6 +252,59 @@ export interface Region {
   sigungu: string;
 }
 
+/**
+ * 2026-07-01 행정구역 개편 이후 약국 데이터가 옛 이름을 쓴다.
+ * 약국 조회할 때 옛 지역 이름으로도 함께 조회한다.
+ */
+export const OLD_REGION_MAPPING: Readonly<Record<string, readonly Region[]>> = {
+  광주광역시: [
+    { sido: "전남광주통합특별시", sigungu: "광산구" },
+    { sido: "전남광주통합특별시", sigungu: "남구" },
+    { sido: "전남광주통합특별시", sigungu: "동구" },
+    { sido: "전남광주통합특별시", sigungu: "북구" },
+    { sido: "전남광주통합특별시", sigungu: "서구" },
+  ],
+  "인천광역시/중구": [
+    { sido: "인천광역시", sigungu: "제물포구" },
+    { sido: "인천광역시", sigungu: "영종구" },
+  ],
+  "인천광역시/동구": [{ sido: "인천광역시", sigungu: "제물포구" }],
+  "인천광역시/서구": [
+    { sido: "인천광역시", sigungu: "서해구" },
+    { sido: "인천광역시", sigungu: "검단구" },
+  ],
+};
+
+/**
+ * 옛 지역 이름을 새 지역으로 대응한다.
+ * 여러 새 지역으로 나뉰 수 있으므로 배열을 반환한다.
+ */
+export function getNewRegionsForOldName(oldSido: string, oldSigungu: string): Region[] {
+  if (oldSido === "광주광역시") {
+    const regions = OLD_REGION_MAPPING.광주광역시;
+    return regions ? Array.from(regions) : [];
+  }
+
+  if (oldSido === "인천광역시") {
+    const key = `인천광역시/${oldSigungu}`;
+    const regions = OLD_REGION_MAPPING[key as keyof typeof OLD_REGION_MAPPING];
+    return regions ? Array.from(regions) : [];
+  }
+
+  if (oldSido === "전라남도") {
+    return [{ sido: "전남광주통합특별시", sigungu: oldSigungu }];
+  }
+
+  return [];
+}
+
+/**
+ * 약국 데이터의 옛 지역 이름인지 확인한다.
+ */
+export function isOldPharmacyRegionName(sido: string): boolean {
+  return sido === "광주광역시" || sido === "전라남도" || sido === "인천광역시";
+}
+
 export function isKnownRegion(r: Region): boolean {
   const list = REGIONS[r.sido];
   if (!list) return false;
@@ -261,12 +314,34 @@ export function isKnownRegion(r: Region): boolean {
 /**
  * 주소 앞머리에서 시도·시군구를 뽑는다. "서울특별시 강남구 일원동 50" → 서울특별시/강남구.
  * 위치 검색 결과의 주소로 해당 지역 목록을 다시 조회할 때 쓴다.
+ * 2026-07-01 개편 후 약국 주소의 옛 지역 이름(광주광역시, 전라남도, 인천광역시 중구 등)을 새 이름으로 변환한다.
  */
 export function regionFromAddress(address: string): Region | null {
   const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
-  const list = REGIONS[sido] ?? [];
-  if (list.length === 0) return { sido, sigungu: "" };
-  if (second && list.includes(second)) return { sido, sigungu: second };
-  return null;
+  if (!sido) return null;
+
+  if (sido in REGIONS) {
+    const list = REGIONS[sido] ?? [];
+    if (list.length === 0) return { sido, sigungu: "" };
+    if (second && list.includes(second)) return { sido, sigungu: second };
+
+    // 새 시도이지만 시군구가 없는 경우, 옛 지역이름일 수 있으니 확인한다
+    const newRegions = getNewRegionsForOldName(sido, second ?? "");
+    if (newRegions.length === 0) return null;
+    if (second) {
+      const match = newRegions.find((r) => r.sigungu === second);
+      if (match) return match;
+    }
+    const first = newRegions[0];
+    return first ?? null;
+  }
+
+  const newRegions = getNewRegionsForOldName(sido, second ?? "");
+  if (newRegions.length === 0) return null;
+  if (second) {
+    const match = newRegions.find((r) => r.sigungu === second);
+    if (match) return match;
+  }
+  const first = newRegions[0];
+  return first ?? null;
 }
