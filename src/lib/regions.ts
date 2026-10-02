@@ -259,12 +259,71 @@ export function isKnownRegion(r: Region): boolean {
 }
 
 /**
+ * 2026-07-01 개편 전 이름. 응급의료기관 서비스는 새 이름으로 바뀌었지만 약국 서비스(목록·위치)는
+ * 2026-09 현재 대부분 옛 이름으로 응답한다 (Q0/Q1 도 옛 이름이어야 대부분이 나온다).
+ */
+const GWANGJU_GU: readonly string[] = ["광산구", "남구", "동구", "북구", "서구"];
+
+// 옛 인천 중구 가운데 영종구로 간 곳 (영종도·용유도 법정동, 영종·용유가 든 도로명)
+const YEONGJONG = /영종|용유|운서동|운남동|운북동|중산동|을왕동|남북동|덕교동|무의동/;
+// 옛 인천 서구 가운데 검단구로 간 곳 (검단 지역 법정동, 검단이 든 도로명)
+const GEOMDAN = /검단|마전동|당하동|원당동|불로동|대곡동|금곡동|오류동|왕길동/;
+
+/** 옛 이름 주소의 시도·시군구를 새 지역으로 옮긴다. 옛 이름이 아니면 null. */
+function regionFromLegacy(sido: string, sigungu: string, address: string): Region | null {
+  const merged = REGIONS.전남광주통합특별시 ?? [];
+  if (sido === "광주광역시" && GWANGJU_GU.includes(sigungu)) {
+    return { sido: "전남광주통합특별시", sigungu };
+  }
+  if (sido === "전라남도" && merged.includes(sigungu) && !GWANGJU_GU.includes(sigungu)) {
+    return { sido: "전남광주통합특별시", sigungu };
+  }
+  if (sido === "인천광역시") {
+    if (sigungu === "동구") return { sido, sigungu: "제물포구" };
+    if (sigungu === "중구")
+      return { sido, sigungu: YEONGJONG.test(address) ? "영종구" : "제물포구" };
+    if (sigungu === "서구") return { sido, sigungu: GEOMDAN.test(address) ? "검단구" : "서해구" };
+  }
+  return null;
+}
+
+/**
+ * 약국 목록 조회에 함께 보낼 옛 지역 이름. 새 이름 조회 결과가 일부뿐이라 옛 이름으로도 조회한다.
+ * 응급의료기관 조회에는 쓰지 않는다.
+ */
+export function legacyPharmacyRegions(r: Region): Region[] {
+  if (r.sido === "전남광주통합특별시") {
+    const old = GWANGJU_GU.includes(r.sigungu) ? "광주광역시" : "전라남도";
+    return [{ sido: old, sigungu: r.sigungu }];
+  }
+  if (r.sido === "인천광역시") {
+    switch (r.sigungu) {
+      case "제물포구":
+        return [
+          { sido: r.sido, sigungu: "중구" },
+          { sido: r.sido, sigungu: "동구" },
+        ];
+      case "영종구":
+        return [{ sido: r.sido, sigungu: "중구" }];
+      case "서해구":
+      case "검단구":
+        return [{ sido: r.sido, sigungu: "서구" }];
+    }
+  }
+  return [];
+}
+
+/**
  * 주소 앞머리에서 시도·시군구를 뽑는다. "서울특별시 강남구 일원동 50" → 서울특별시/강남구.
  * 위치 검색 결과의 주소로 해당 지역 목록을 다시 조회할 때 쓴다.
+ * 옛 이름 주소("광주광역시 서구 …", "인천광역시 중구 …")는 새 지역으로 옮겨 돌려준다.
  */
 export function regionFromAddress(address: string): Region | null {
   const [sido, second] = address.trim().split(/\s+/);
-  if (!sido || !(sido in REGIONS)) return null;
+  if (!sido) return null;
+  const legacy = second ? regionFromLegacy(sido, second, address) : null;
+  if (legacy) return legacy;
+  if (!(sido in REGIONS)) return null;
   const list = REGIONS[sido] ?? [];
   if (list.length === 0) return { sido, sigungu: "" };
   if (second && list.includes(second)) return { sido, sigungu: second };

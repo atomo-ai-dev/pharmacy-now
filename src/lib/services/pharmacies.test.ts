@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import type { MedicalDataSource } from "@/lib/api/source";
 import { kstDateTime } from "@/lib/time/kst";
 import { demoSource } from "@/test/fixtures";
+import { fixtureItems } from "../../test/fixtures";
 import { findPharmacies } from "./pharmacies";
 
 // 2026-09-28 월요일
@@ -104,5 +105,113 @@ describe("findPharmacies — 내 위치", () => {
     };
     await findPharmacies(source, { kind: "point", point: JONGNO3GA }, kstDateTime(2026, 9, 28, 12));
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
+  });
+});
+
+/**
+ * 약국 서비스가 옛 지역 이름을 섞어 돌려주는 모양을 흉내 낸다 (fixtures/synthetic, 합성 데이터).
+ * 목록 조회는 실서비스처럼 주소 앞머리가 Q0/Q1 과 같은 약국만 돌려준다.
+ */
+function legacyNamedSource() {
+  const list = fixtureItems("synthetic/pharmacy-list-legacy-regions.xml");
+  const near = fixtureItems("synthetic/pharmacy-location-legacy-regions.xml");
+  const pharmaciesByRegion = vi.fn(async (r: { sido: string; sigungu: string }) =>
+    list.filter((i) => (i.dutyaddr ?? "").startsWith(`${r.sido} ${r.sigungu} `)),
+  );
+  const emergency = vi.fn(async () => []);
+  const source: MedicalDataSource = {
+    pharmaciesByRegion,
+    pharmaciesNear: async () => near,
+    emergencyRoomsByRegion: emergency,
+    emergencyRoomsNear: emergency,
+    emergencyBeds: emergency,
+  };
+  return { source, pharmaciesByRegion };
+}
+
+describe("findPharmacies — 2026-07 개편 지역 (약국 서비스는 옛 이름)", () => {
+  const at = kstDateTime(2026, 9, 28, 12);
+
+  it("영종구를 고르면 옛 이름 중구 응답 가운데 영종 주소 약국만, hpid 로 중복 없이", async () => {
+    const { source, pharmaciesByRegion } = legacyNamedSource();
+    const items = await findPharmacies(
+      source,
+      { kind: "region", region: { sido: "인천광역시", sigungu: "영종구" }, origin: null },
+      at,
+    );
+    expect(items.map((p) => p.name).sort()).toEqual(["(합성) 영종하늘약국", "(합성) 운서역약국"]);
+    expect(pharmaciesByRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual([
+      "영종구",
+      "중구",
+    ]);
+  });
+
+  it("제물포구는 옛 중구(영종 제외)와 동구를 합친다", async () => {
+    const { source } = legacyNamedSource();
+    const items = await findPharmacies(
+      source,
+      { kind: "region", region: { sido: "인천광역시", sigungu: "제물포구" }, origin: null },
+      at,
+    );
+    expect(items.map((p) => p.name).sort()).toEqual(["(합성) 송림약국", "(합성) 신포약국"]);
+  });
+
+  it("검단구·서해구는 옛 서구 응답을 주소로 나눈다", async () => {
+    const { source } = legacyNamedSource();
+    const names = async (sigungu: string) =>
+      (
+        await findPharmacies(
+          source,
+          { kind: "region", region: { sido: "인천광역시", sigungu }, origin: null },
+          at,
+        )
+      ).map((p) => p.name);
+    expect(await names("검단구")).toEqual(["(합성) 검단신도시약국"]);
+    expect(await names("서해구")).toEqual(["(합성) 청라약국"]);
+  });
+
+  it("전남광주통합특별시 서구는 광주광역시 서구 약국도 보여 준다", async () => {
+    const { source } = legacyNamedSource();
+    const items = await findPharmacies(
+      source,
+      { kind: "region", region: { sido: "전남광주통합특별시", sigungu: "서구" }, origin: null },
+      at,
+    );
+    expect(items.map((p) => p.name).sort()).toEqual([
+      "(합성) 상무햇살약국",
+      "(합성) 쌍촌약국",
+      "(합성) 치평온누리약국",
+    ]);
+  });
+
+  it("광주 좌표 조회에서 옛 이름 주소로도 요일별 운영시간을 채운다", async () => {
+    const { source, pharmaciesByRegion } = legacyNamedSource();
+    const items = await findPharmacies(
+      source,
+      { kind: "point", point: { lat: 35.1595, lon: 126.8526 } },
+      at,
+    );
+    expect(items).toHaveLength(3);
+    expect(items.every((p) => p.weeklyHours !== null)).toBe(true);
+    expect(items.find((p) => p.name === "(합성) 상무햇살약국")?.holiday).toBe(true);
+    expect(pharmaciesByRegion.mock.calls.map(([r]) => `${r.sido} ${r.sigungu}`).sort()).toEqual([
+      "광주광역시 서구",
+      "전남광주통합특별시 서구",
+    ]);
+  });
+
+  it("옛 이름 조회만 실패해도 새 이름 결과는 보여 준다", async () => {
+    const { source, pharmaciesByRegion } = legacyNamedSource();
+    const base = pharmaciesByRegion.getMockImplementation();
+    pharmaciesByRegion.mockImplementation(async (r) => {
+      if (r.sido === "광주광역시") throw new Error("down");
+      return base ? base(r) : [];
+    });
+    const items = await findPharmacies(
+      source,
+      { kind: "region", region: { sido: "전남광주통합특별시", sigungu: "서구" }, origin: null },
+      at,
+    );
+    expect(items.map((p) => p.name)).toEqual(["(합성) 쌍촌약국"]);
   });
 });
