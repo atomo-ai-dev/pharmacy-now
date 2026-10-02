@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Synthetic data: 약국 위치정보 응답 (옛 지역 이름 광주광역시를 포함)
+     2026-07-01 행정구역 개편 이후 약국 API가 반환하는 실제 데이터 형식을 모방함.
+     실제 응답 내용은 아니고 테스트 목적의 합성 데이터입니다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <cnt>853</cnt>
+        <distance>0.63</distance>
+        <dutyAddr>광주광역시 서구 상무중앙로 95 (치평동)</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(옛이름) 햇살약국</dutyName>
+        <dutyTel1>062-381-3331</dutyTel1>
+        <endTime>1900</endTime>
+        <hpid>OLD_LOC0001</hpid>
+        <latitude>35.1555</latitude>
+        <longitude>126.8478</longitude>
+        <startTime>0700</startTime>
+      </item>
+      <item>
+        <cnt>854</cnt>
+        <distance>1.20</distance>
+        <dutyAddr>광주광역시 남구 한천로 200</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(옛이름) 남구약국</dutyName>
+        <dutyTel1>062-111-1111</dutyTel1>
+        <endTime>2000</endTime>
+        <hpid>OLD_LOC0002</hpid>
+        <latitude>35.1300</latitude>
+        <longitude>126.8800</longitude>
+        <startTime>0800</startTime>
+      </item>
+      <item>
+        <cnt>855</cnt>
+        <distance>2.50</distance>
+        <dutyAddr>광주광역시 동구 충장로 100</dutyAddr>
+        <dutyDiv>H</dutyDiv>
+        <dutyDivName>약국</dutyDivName>
+        <dutyName>(옛이름) 동구약국</dutyName>
+        <dutyTel1>062-333-3333</dutyTel1>
+        <endTime>1830</endTime>
+        <hpid>OLD_LOC0003</hpid>
+        <latitude>35.1600</latitude>
+        <longitude>126.9100</longitude>
+        <startTime>0800</startTime>
+      </item>
+    </items>
+    <numOfRows>3</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>3</totalCount>
+  </body>
+</response>

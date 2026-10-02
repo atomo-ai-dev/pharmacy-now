@@ -47,6 +47,33 @@ describe("regionFromAddress", () => {
     expect(regionFromAddress(addr)).toEqual({ sido, sigungu });
   });
 
+  it("2026-07-01 개편 후 옛 지역 이름을 새 지역으로 변환한다", () => {
+    expect(regionFromAddress("광주광역시 서구 상무중앙로 95")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "서구",
+    });
+    expect(regionFromAddress("광주광역시 남구 한천로 100")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "남구",
+    });
+    expect(regionFromAddress("전라남도 순천시 중앙동 50")).toEqual({
+      sido: "전남광주통합특별시",
+      sigungu: "순천시",
+    });
+    expect(regionFromAddress("인천광역시 중구 항동 1번지")).toEqual({
+      sido: "인천광역시",
+      sigungu: "제물포구",
+    });
+    expect(regionFromAddress("인천광역시 동구 우각로 50")).toEqual({
+      sido: "인천광역시",
+      sigungu: "제물포구",
+    });
+    expect(regionFromAddress("인천광역시 서구 가정동 10")).toEqual({
+      sido: "인천광역시",
+      sigungu: "서해구",
+    });
+  });
+
   it("시도가 없거나 모르는 주소는 null", () => {
     expect(regionFromAddress("평내동 107-1(경춘로 1308번길 8-8)")).toBeNull();
     expect(regionFromAddress("서울특별시 없는구 1")).toBeNull();

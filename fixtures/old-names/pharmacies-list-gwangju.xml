@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Synthetic data: 약국 목록정보 응답 (옛 지역 이름 광주광역시를 포함, 위치 조회 테스트용)
+     2026-07-01 행정구역 개편 이후 약국 API가 반환하는 실제 데이터 형식을 모방함.
+     실제 응답 내용은 아니고 테스트 목적의 합성 데이터입니다. -->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item>
+        <dutyAddr>광주광역시 서구 상무중앙로 95 (치평동)</dutyAddr>
+        <dutyName>(옛이름) 햇살약국</dutyName>
+        <dutyTel1>062-381-3331</dutyTel1>
+        <dutyTime1s>0700</dutyTime1s>
+        <dutyTime1c>1900</dutyTime1c>
+        <dutyTime2s>0700</dutyTime2s>
+        <dutyTime2c>1900</dutyTime2c>
+        <dutyTime3s>0700</dutyTime3s>
+        <dutyTime3c>1900</dutyTime3c>
+        <dutyTime4s>0700</dutyTime4s>
+        <dutyTime4c>1900</dutyTime4c>
+        <dutyTime5s>0700</dutyTime5s>
+        <dutyTime5c>1900</dutyTime5c>
+        <dutyTime6s>0900</dutyTime6s>
+        <dutyTime6c>1700</dutyTime6c>
+        <dutyTime7s>0900</dutyTime7s>
+        <dutyTime7c>1700</dutyTime7c>
+        <hpid>OLD_LOC0001</hpid>
+        <wgs84Lat>35.1555</wgs84Lat>
+        <wgs84Lon>126.8478</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>광주광역시 남구 한천로 200</dutyAddr>
+        <dutyName>(옛이름) 남구약국</dutyName>
+        <dutyTel1>062-111-1111</dutyTel1>
+        <dutyTime1s>0800</dutyTime1s>
+        <dutyTime1c>2000</dutyTime1c>
+        <dutyTime2s>0800</dutyTime2s>
+        <dutyTime2c>2000</dutyTime2c>
+        <dutyTime3s>0800</dutyTime3s>
+        <dutyTime3c>2000</dutyTime3c>
+        <dutyTime4s>0800</dutyTime4s>
+        <dutyTime4c>2000</dutyTime4c>
+        <dutyTime5s>0800</dutyTime5s>
+        <dutyTime5c>2000</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1800</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1800</dutyTime7c>
+        <hpid>OLD_LOC0002</hpid>
+        <wgs84Lat>35.1300</wgs84Lat>
+        <wgs84Lon>126.8800</wgs84Lon>
+      </item>
+      <item>
+        <dutyAddr>광주광역시 동구 충장로 100</dutyAddr>
+        <dutyName>(옛이름) 동구약국</dutyName>
+        <dutyTel1>062-333-3333</dutyTel1>
+        <dutyTime1s>0800</dutyTime1s>
+        <dutyTime1c>1830</dutyTime1c>
+        <dutyTime2s>0800</dutyTime2s>
+        <dutyTime2c>1830</dutyTime2c>
+        <dutyTime3s>0800</dutyTime3s>
+        <dutyTime3c>1830</dutyTime3c>
+        <dutyTime4s>0800</dutyTime4s>
+        <dutyTime4c>1830</dutyTime4c>
+        <dutyTime5s>0800</dutyTime5s>
+        <dutyTime5c>1830</dutyTime5c>
+        <dutyTime6s>1000</dutyTime6s>
+        <dutyTime6c>1600</dutyTime6c>
+        <dutyTime7s>1000</dutyTime7s>
+        <dutyTime7c>1600</dutyTime7c>
+        <hpid>OLD_LOC0003</hpid>
+        <wgs84Lat>35.1600</wgs84Lat>
+        <wgs84Lon>126.9100</wgs84Lon>
+      </item>
+    </items>
+    <numOfRows>3</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>3</totalCount>
+  </body>
+</response>

@@ -106,3 +106,74 @@ describe("findPharmacies — 내 위치", () => {
     expect(byRegion.mock.calls.map(([r]) => r.sigungu).sort()).toEqual(["종로구", "중구"]);
   });
 });
+
+describe("findPharmacies — 2026-07-01 개편 후 옛 지역 이름", () => {
+  it("영종구 선택 시 옛 이름 중구 주소 중 영종 약국만 나온다", async () => {
+    const { readFixture } = await import("@/test/fixtures");
+    const { FixtureSource } = await import("@/lib/api/fixtureSource");
+
+    const source = new FixtureSource((file) => {
+      if (file === "pharmacies.xml") return readFixture("old-names/pharmacies-incheon.xml");
+      return readFixture(`demo/${file}`);
+    });
+
+    const items = await findPharmacies(
+      source,
+      {
+        kind: "region",
+        region: { sido: "인천광역시", sigungu: "영종구" },
+        origin: null,
+      },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    expect(items.length).toBe(1);
+    expect(items[0]?.name).toBe("(옛이름) 영종약국");
+    expect(items[0]?.address).toContain("영종");
+  });
+
+  it("광주 지역 선택 시 옛 이름 광주광역시 주소 약국들이 나온다", async () => {
+    const { readFixture } = await import("@/test/fixtures");
+    const { FixtureSource } = await import("@/lib/api/fixtureSource");
+
+    const source = new FixtureSource((file) => {
+      if (file === "pharmacies.xml") return readFixture("old-names/pharmacies-gwangju.xml");
+      return readFixture(`demo/${file}`);
+    });
+
+    const items = await findPharmacies(
+      source,
+      {
+        kind: "region",
+        region: { sido: "전남광주통합특별시", sigungu: "서구" },
+        origin: null,
+      },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    expect(items.length).toBeGreaterThan(0);
+    expect(items.some((p) => p.address.includes("광주광역시 서구"))).toBe(true);
+    expect(items[0]?.weeklyHours).not.toBeNull();
+  });
+
+  it("위치 조회에서 옛 이름 주소로 보강이 일어난다", async () => {
+    const { readFixture } = await import("@/test/fixtures");
+    const { FixtureSource } = await import("@/lib/api/fixtureSource");
+
+    const gwangjuPoint = { lat: 35.1595, lon: 126.8526 };
+    const source = new FixtureSource((file) => {
+      if (file === "pharmacies.xml") return readFixture("old-names/pharmacies-list-gwangju.xml");
+      return readFixture(`demo/${file}`);
+    });
+
+    const items = await findPharmacies(
+      source,
+      { kind: "point", point: gwangjuPoint },
+      kstDateTime(2026, 9, 28, 12),
+    );
+
+    expect(items.length).toBeGreaterThan(0);
+    const enhanced = items.filter((p) => p.weeklyHours !== null);
+    expect(enhanced.length).toBeGreaterThan(0);
+  });
+});
