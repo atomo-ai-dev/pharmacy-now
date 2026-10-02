@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+  합성(synthetic) 데이터 — 실제 API 응답을 녹화한 것이 아니다. 서비스 키도 들어 있지 않다.
+  getParmacyLcinfoInqire(약국 위치정보 조회) 응답 모양. 광주 상무지구(35.1595, 126.8526) 근처 조회를 흉내 낸다.
+  2026-07-01 행정구역 개편 뒤 약국 서비스가 옛 지역 이름(광주광역시·전라남도, 인천 중구·동구·서구)과
+  새 이름을 섞어 돌려주는 모양을 흉내 낸다. 약국 이름·hpid·전화번호·좌표는 지어낸 값이다.
+-->
+<response>
+  <header>
+    <resultCode>00</resultCode>
+    <resultMsg>NORMAL SERVICE.</resultMsg>
+  </header>
+  <body>
+    <items>
+      <item><cnt>1</cnt><distance>0.63</distance><dutyAddr>광주광역시 서구 상무중앙로 95 (치평동)</dutyAddr><dutyDiv>H</dutyDiv><dutyDivName>약국</dutyDivName><dutyName>(합성) 상무햇살약국</dutyName><dutyTel1>062-000-0001</dutyTel1><endTime>1900</endTime><hpid>S9000001</hpid><latitude>35.1554</latitude><longitude>126.8477</longitude><rnum>1</rnum><startTime>0700</startTime></item>
+      <item><cnt>2</cnt><distance>0.70</distance><dutyAddr>광주광역시 서구 치평로 20 (치평동)</dutyAddr><dutyDiv>H</dutyDiv><dutyDivName>약국</dutyDivName><dutyName>(합성) 치평온누리약국</dutyName><dutyTel1>062-000-0002</dutyTel1><endTime>2300</endTime><hpid>S9000002</hpid><latitude>35.1530</latitude><longitude>126.8510</longitude><rnum>2</rnum><startTime>0900</startTime></item>
+      <item><cnt>3</cnt><distance>1.25</distance><dutyAddr>전남광주통합특별시 서구 상무대로 1000 (쌍촌동)</dutyAddr><dutyDiv>H</dutyDiv><dutyDivName>약국</dutyDivName><dutyName>(합성) 쌍촌약국</dutyName><dutyTel1>062-000-0003</dutyTel1><endTime>1830</endTime><hpid>S9000003</hpid><latitude>35.1520</latitude><longitude>126.8640</longitude><rnum>3</rnum><startTime>0900</startTime></item>
+    </items>
+    <numOfRows>3</numOfRows>
+    <pageNo>1</pageNo>
+    <totalCount>3</totalCount>
+  </body>
+</response>
